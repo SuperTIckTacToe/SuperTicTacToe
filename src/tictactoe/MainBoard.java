@@ -105,7 +105,10 @@ public class MainBoard extends JPanel
         button.set_fill('o') ;
       }
       
-      
+      if ( boards.get( button.get_parent() ).CheckWinner( button.get_index()  ) )
+      {
+    	  System.out.println( "Winner" );
+      }
       // So that the button can't be clicked again. It currently sets the
       // button to grey, but it looks like that can be changed with UIManager..
       button.setEnabled(false);

@@ -136,7 +136,6 @@ public class MiniBoard extends JPanel
 			  Square_Button button = ( Square_Button ) c ;
 			  if ( button.get_fill() == 'n' )
 			  {
-				  System.out.println( "Here ");
 				  button.setEnabled( true );
 			  }
 		  }
@@ -158,10 +157,80 @@ public class MiniBoard extends JPanel
   }
   
   public boolean CheckWinner( int in )
-  {
+  {	
+	  int row = in / 3; 
+	  int col = in % 3;
+	  char move = buttons.get( in ).get_fill();
+	  int i ; 
 	  
-
+	  //check horizontal 
+	  for ( i = 0 ; i < 3 ; ++i)
+	  {
+		  if( buttons.get( i + row ).get_fill() != move )
+		  {
+			  break; 
+		  }
+	  }
+	  
+	  if ( i == 3 ) {
+		  winner(); 
+		  return true;
+	  }
+	  
+	  //check verticle 
+	  for( i = 0 ; i < 9 ; i += 3 )
+	  {
+		  if( buttons.get( i + col ).get_fill() != move )
+		  {
+			  break; 
+		  }
+	  }
+	  
+	  if ( i >= 9 )
+	  {
+		  winner(); 
+		  return true;
+	  }
+	  
+	  //check horisontal 0, 4 , 8 
+	  if ( row == col )
+	  {
+		  for( i = 0 ; i < 9 ; i += 4 )
+		  {
+			  if( buttons.get( i ).get_fill() != move )
+			  {
+				  break; 
+			  }
+		  }
+	  }
+	  
+	  if ( i >= 9 ){
+		  winner(); 
+		  return true;
+	  }
+	  
+	  //check horizontal 3, 4, 6 
+	  for ( i = 2 ; i < 8 ; ++i )
+	  {
+		  if( buttons.get( i ).get_fill() != move )
+		  {
+			  break; 
+		  }  
+	  }
+	  
+	  if ( i >= 8 )
+	  {
+		winner();
+		return true; 
+	  }
+	  
 	  return false; 
+  }
+  
+  private void winner()
+  {
+	  System.out.println( "Winner" );
+	  //do stuff when there is a winner 
   }
   
   public boolean getWinner()
