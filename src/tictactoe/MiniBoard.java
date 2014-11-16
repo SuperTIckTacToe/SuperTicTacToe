@@ -17,11 +17,6 @@ import javax.swing.border.EmptyBorder;
 
 public class MiniBoard extends JPanel
 {
-  // Buttons for each square on tic-tac-toe board, labeled left to right
-  // from top-left to bottom-right:
-  JButton button1, button2, button3, button4, button5, button6;
-  JButton button7, button8, button9;
-  
   // holds all the buttons 
   ArrayList< Square_Button > buttons = new ArrayList< Square_Button >() ;
   
@@ -172,10 +167,16 @@ public class MiniBoard extends JPanel
   {	
 	  int row = in / 3; 
 	  int col = in % 3;
+	 
+	  
 	  
 	  //System.out.println( "row: " + row + " col: " + col );
 	  
 	  char move = buttons.get( in ).get_fill();
+	  System.out.println( move ); 
+	  if( move == 'n' )
+		  return false; 
+	  
 	  //need to change this a better name 
 	  int i ; 
 	  
@@ -264,11 +265,6 @@ public class MiniBoard extends JPanel
   public char get_winner()
   {
 	  return winner_label; 
-  }
-  
-  protected void paintWinner( Graphics g )
-  {
-	  
   }
   
   public boolean getWinner()

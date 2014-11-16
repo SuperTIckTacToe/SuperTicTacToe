@@ -1,6 +1,8 @@
 package tictactoe;
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.*;
 
@@ -14,12 +16,20 @@ public class GameGUI extends JFrame
   
   MainBoard mainBoard;
   JPanel statsPanel;
+  JLabel stats;
   
   public GameGUI()
   {
     setVisible(true);
     // Whatever actions we want the user to be able to take:
     startGame = new JMenuItem("Start Game");
+    startGame.addActionListener( new ActionListener() {
+ 
+            public void actionPerformed(ActionEvent e)
+            {
+            	mainBoard = new MainBoard( stats );
+            }
+        });   
     leaveGame = new JMenuItem("Leave Game");
     pauseGame = new JMenuItem("Pause Game");
     
@@ -38,7 +48,7 @@ public class GameGUI extends JFrame
     statsPanel.setPreferredSize(new Dimension(250,600));
     Color panelCol = new Color(0, 128, 255);
     statsPanel.setBackground(panelCol);
-    JLabel stats = new JLabel() ;
+    stats = new JLabel() ;
     statsPanel.add( stats ); 
     
     mainBoard = new MainBoard( stats );

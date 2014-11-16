@@ -12,7 +12,6 @@ import tictactoe.MiniBoard.Square_Button;
 
 public class MainBoard extends JPanel
 {
-  MiniBoard mini1, mini2, mini3, mini4, mini5, mini6, mini7, mini8, mini9;
   static ArrayList< MiniBoard > boards = new ArrayList<MiniBoard>();
   
   static ImageIcon img;
@@ -129,6 +128,10 @@ public class MainBoard extends JPanel
   
   static void winner( char in )
   {
+	 for( int i = 0 ; i < boards.size() ; ++i )
+	 {
+		  boards.get( i ).dissable_panel();
+	 }
 	stats.setText( in + " Wins!!!");  
   }
   
@@ -169,8 +172,8 @@ public class MainBoard extends JPanel
       if ( boards.get( button.get_parent() ).CheckWinner( button.get_index()  ) )
       {
     	  //do some check winner stuff 
-    	  check_winner( button.get_parent() );
-    	  
+    	  if ( check_winner( button.get_parent() ))
+    		  return ;
       }
       
       boards.get( button.get_parent() ).dissable_panel();
