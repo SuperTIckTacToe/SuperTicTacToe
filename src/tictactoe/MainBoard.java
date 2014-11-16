@@ -21,12 +21,13 @@ public class MainBoard extends JPanel
   static ImageIcon blankImage;
   String xImagePath;
   String oImagePath;
+  static JLabel stats; 
   
   static boolean first_move = true; 
   
-  public MainBoard()
+  public MainBoard( JLabel output )
   {
-	 
+	 stats = output; 
 	 xImagePath = new String("images/X_Image.jpg");
 	 img = new ImageIcon();
 	 xImage = new ImageIcon(getClass().getClassLoader().getResource(xImagePath));
@@ -48,29 +49,88 @@ public class MainBoard extends JPanel
     	add( boards.get( i ) );
     }
     
-    /*mini1 = new MiniBoard();
-    mini2 = new MiniBoard();
-    mini3 = new MiniBoard();
-    mini4 = new MiniBoard();
-    mini5 = new MiniBoard();
-    mini6 = new MiniBoard();
-    mini7 = new MiniBoard();
-    mini8 = new MiniBoard();
-    mini9 = new MiniBoard();
-    
-    add(mini1);
-    add(mini2);
-    add(mini3);
-    add(mini4);
-    add(mini5);
-    add(mini6);
-    add(mini7);
-    add(mini8);
-    add(mini9);*/
   }
   
 
+  static boolean check_winner( int in )
+  {
+	  int row = in / 3; 
+	  int col = in % 3;
+	  
+	  //System.out.println( "row: " + row + " col: " + col );
+	  
+	  char move = boards.get( in ).get_winner();
+	  //need to change this a better name 
+	  int i ; 
+	  
+	  //check horizontal 
+	  for ( i = 0 ; i < 3 ; ++i)
+	  {
+		  if( boards.get( i + row * 3 ).get_winner() != move )
+		  {
+			  break; 
+		  }
+	  }
+	  
+	  if ( i == 3 ) {
+		  winner( move ); 
+		  return true;
+	  }
+	  
+	  //check vertical 
+	  for( i = 0 ; i < 9 ; i += 3 )
+	  {
+		  if( boards.get( i + col ).get_winner() != move )
+		  {
+			  break; 
+		  }
+	  }
+	  
+	  if ( i >= 9 )
+	  {
+		  winner( move ); 
+		  return true;
+	  }
+	  
+	  //check diag 0, 4 , 8 
+	  if ( row == col )
+	  {
+		  for( i = 0 ; i < 9 ; i += 4 )
+		  {
+			  if( boards.get( i ).get_winner() != move )
+			  {
+				  break; 
+			  }
+		  }
+	  }
+	  
+	  if ( i >= 9 ){
+		  winner( move ); 
+		  return true;
+	  }
+	  
+	  //check diag  2, 4, 6 
+	  for ( i = 2 ; i < 8 ; i += 2 )
+	  {
+		  if( boards.get( i ).get_winner() != move )
+		  {
+			  break; 
+		  }  
+	  }
+	  
+	  if ( i >= 8 )
+	  {
+		winner( move );
+		return true; 
+	  }
+	  
+	  return false; 
+  }
   
+  static void winner( char in )
+  {
+	stats.setText( in + " Wins!!!");  
+  }
   
   public static class ButtonListener implements ActionListener
   {
@@ -88,8 +148,7 @@ public class MainBoard extends JPanel
       }
       
       
-      boards.get( button.get_parent() ).dissable_panel();;
-      boards.get( button.get_index() ).enable_panel();
+
       
       // sets the button icon to xImage, we can change this to set the image of
       // X or O depending on the player...
@@ -98,17 +157,37 @@ public class MainBoard extends JPanel
       {
         img = oImage;
       	button.set_fill('x') ;
+      	stats.setText("Move: O");
       }
       else
       {
         img = xImage;
         button.set_fill('o') ;
+        stats.setText("Move: X");
       }
       
       if ( boards.get( button.get_parent() ).CheckWinner( button.get_index()  ) )
       {
-    	  System.out.println( "Winner" );
+    	  //do some check winner stuff 
+    	  check_winner( button.get_parent() );
+    	  
       }
+      
+      boards.get( button.get_parent() ).dissable_panel();
+      if(boards.get( button.get_index() ).is_active() )
+      {
+          boards.get( button.get_index() ).enable_panel();
+      }
+      else
+      {
+    	  first_move = true; 
+    	  for( int i = 0 ; i < boards.size() ; ++i )
+    	  {
+    		  if( boards.get( i ).is_active() )
+    			  boards.get( i ).enable_panel();
+    	  }
+      }
+      
       // So that the button can't be clicked again. It currently sets the
       // button to grey, but it looks like that can be changed with UIManager..
       button.setEnabled(false);

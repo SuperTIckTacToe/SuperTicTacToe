@@ -29,6 +29,8 @@ public class MiniBoard extends JPanel
   static ImageIcon img;
   static ImageIcon xImage;
   static ImageIcon oImage;
+  static ImageIcon xLarge;
+  static ImageIcon oLarge;
   
   String xImagePath;
   String oImagePath;
@@ -36,6 +38,7 @@ public class MiniBoard extends JPanel
   static boolean xWins;
   static BufferedImage bkImage;
   int index; 
+  char winner_label = 'n';
   
   // glass pane
   //JPanel glass;
@@ -90,6 +93,9 @@ public class MiniBoard extends JPanel
     img = xImage;
     blankImage = new ImageIcon(getClass().getClassLoader().getResource("images/blank.jpg"));
     
+    xLarge = new ImageIcon(getClass().getClassLoader().getResource("images/X_large.png") );
+    oLarge = new ImageIcon(getClass().getClassLoader().getResource("images/O_large.png") );
+    
     // Set a 3 by 3 gridlayout for each Mini board:
     setLayout(new GridLayout( 3, 3, 1, 1 ) );
     
@@ -120,6 +126,9 @@ public class MiniBoard extends JPanel
   
   public void dissable_panel()
   {
+	  if( !is_active() )
+		  return; 
+	  
 	  for (Component c : this.getComponents()) 
 	  {
 		  c.setEnabled( false );
@@ -156,28 +165,35 @@ public class MiniBoard extends JPanel
     g.drawImage(bkImage, 0, 0, getWidth(), getHeight(), this);
   }
   
+
+  
+  
   public boolean CheckWinner( int in )
   {	
 	  int row = in / 3; 
 	  int col = in % 3;
+	  
+	  //System.out.println( "row: " + row + " col: " + col );
+	  
 	  char move = buttons.get( in ).get_fill();
+	  //need to change this a better name 
 	  int i ; 
 	  
 	  //check horizontal 
 	  for ( i = 0 ; i < 3 ; ++i)
 	  {
-		  if( buttons.get( i + row ).get_fill() != move )
+		  if( buttons.get( i + row * 3 ).get_fill() != move )
 		  {
 			  break; 
 		  }
 	  }
 	  
 	  if ( i == 3 ) {
-		  winner(); 
+		  winner( move ); 
 		  return true;
 	  }
 	  
-	  //check verticle 
+	  //check vertical 
 	  for( i = 0 ; i < 9 ; i += 3 )
 	  {
 		  if( buttons.get( i + col ).get_fill() != move )
@@ -188,11 +204,11 @@ public class MiniBoard extends JPanel
 	  
 	  if ( i >= 9 )
 	  {
-		  winner(); 
+		  winner( move ); 
 		  return true;
 	  }
 	  
-	  //check horisontal 0, 4 , 8 
+	  //check diag 0, 4 , 8 
 	  if ( row == col )
 	  {
 		  for( i = 0 ; i < 9 ; i += 4 )
@@ -205,12 +221,12 @@ public class MiniBoard extends JPanel
 	  }
 	  
 	  if ( i >= 9 ){
-		  winner(); 
+		  winner( move ); 
 		  return true;
 	  }
 	  
-	  //check horizontal 3, 4, 6 
-	  for ( i = 2 ; i < 8 ; ++i )
+	  //check diag  2, 4, 6 
+	  for ( i = 2 ; i < 8 ; i += 2 )
 	  {
 		  if( buttons.get( i ).get_fill() != move )
 		  {
@@ -220,17 +236,39 @@ public class MiniBoard extends JPanel
 	  
 	  if ( i >= 8 )
 	  {
-		winner();
+		winner( move );
 		return true; 
 	  }
 	  
 	  return false; 
   }
   
-  private void winner()
-  {
-	  System.out.println( "Winner" );
+  private void winner( char in )
+  {	
+	  
+	  this.removeAll();
+	  winner_label = in ; 
+	  setLayout( new FlowLayout() );
+	  JLabel lable = new JLabel( in == 'x' ? xLarge : oLarge );
+	  //lable.setMinimumSize( this.getSize() );
+	  add( lable );
+	  this.updateUI();
 	  //do stuff when there is a winner 
+  }
+  
+  public boolean is_active()
+  {
+	  return winner_label == 'n' ; 
+  }
+  
+  public char get_winner()
+  {
+	  return winner_label; 
+  }
+  
+  protected void paintWinner( Graphics g )
+  {
+	  
   }
   
   public boolean getWinner()

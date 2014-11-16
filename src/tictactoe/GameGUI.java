@@ -38,8 +38,10 @@ public class GameGUI extends JFrame
     statsPanel.setPreferredSize(new Dimension(250,600));
     Color panelCol = new Color(0, 128, 255);
     statsPanel.setBackground(panelCol);
+    JLabel stats = new JLabel() ;
+    statsPanel.add( stats ); 
     
-    mainBoard = new MainBoard();
+    mainBoard = new MainBoard( stats );
     
     setLayout(new FlowLayout());
     setJMenuBar(menuBar);
