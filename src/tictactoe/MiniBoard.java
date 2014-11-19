@@ -67,8 +67,23 @@ public class MiniBoard extends JPanel
 	  {
 		  return fill; 
 	  }
+	  
+	  public void resetButton()
+	  {
+	    this.set_fill('n');
+	    this.setEnabled(true);
+	    this.setIcon(blankImage);
+	  }
   }
   
+  public void resetMiniBoard()
+  {
+    for(Square_Button but: buttons)
+    {
+      but.resetButton();
+      enable_panel();
+    }
+  }
   
   public MiniBoard( ActionListener button_listener , int _index )
   {
@@ -113,10 +128,7 @@ public class MiniBoard extends JPanel
     graph.drawLine(70, 0, 70, 210);
     graph.drawLine(140, 0, 140, 210);
     graph.drawLine(0, 70, 210, 70);
-    graph.drawLine(0, 140, 210, 140);*/
-    
-
-    
+    graph.drawLine(0, 140, 210, 140);*/   
   }
   
   public void dissable_panel()

@@ -21,37 +21,45 @@ public class MainBoard extends JPanel
   String xImagePath;
   String oImagePath;
   static JLabel stats; 
+  GameGUI game;
   
   static boolean first_move = true; 
   
-  public MainBoard( JLabel output )
+  public MainBoard( JLabel output, GameGUI game_in )
   {
-	 stats = output; 
-	 xImagePath = new String("images/X_Image.jpg");
-	 img = new ImageIcon();
-	 xImage = new ImageIcon(getClass().getClassLoader().getResource(xImagePath));
-	 blankImage = new ImageIcon(getClass().getClassLoader().getResource("images/blank.jpg"));
-	 oImage = new ImageIcon(getClass().getClassLoader().getResource("images/O_image.jpg"));
-	 img = xImage;
-	      
-	 
-	  
-    Color black = new Color(0, 0, 0);
-    setBackground(black);
-    setVisible(true);
-    setLayout(new GridLayout(3,3,15,15));
-    ButtonListener b_list = new ButtonListener(); 
-    
-    for( int i = 0 ; i < 9 ; ++i )
-    {
-    	boards.add( new MiniBoard( b_list , i ) );
-    	add( boards.get( i ) );
-    }
-    
+    System.out.println("WHATEVS");
+    stats = output; 
+    xImagePath = new String("images/X_Image.jpg");
+    img = new ImageIcon();
+    xImage = new ImageIcon(getClass().getClassLoader().getResource(xImagePath));
+    blankImage = new ImageIcon(getClass().getClassLoader().getResource("images/blank.jpg"));
+    oImage = new ImageIcon(getClass().getClassLoader().getResource("images/O_image.jpg"));
+    img = xImage;
+    game = game_in;
+             
+     Color black = new Color(0, 0, 0);
+     setBackground(black);
+     setVisible(true);
+     setLayout(new GridLayout(3,3,15,15));
+     ButtonListener b_list = new ButtonListener(); 
+     
+     for( int i = 0 ; i < 9 ; ++i )
+     {
+       boards.add( new MiniBoard( b_list , i ) );
+       add( boards.get( i ) );
+     } 
   }
   
+  public void resetBoard()
+  {
+    for(MiniBoard mini: boards)
+    {
+      mini.resetMiniBoard();
+      first_move = true;
+    }
+  }
 
-  static boolean check_winner( int in )
+  boolean check_winner( int in )
   {
 	  int row = in / 3; 
 	  int col = in % 3;
@@ -126,16 +134,17 @@ public class MainBoard extends JPanel
 	  return false; 
   }
   
-  static void winner( char in )
+  void winner( char in )
   {
 	 for( int i = 0 ; i < boards.size() ; ++i )
 	 {
 		  boards.get( i ).dissable_panel();
 	 }
-	stats.setText( in + " Wins!!!");  
+	stats.setText( in + " Wins!!!");
+	game.setGlass();
   }
   
-  public static class ButtonListener implements ActionListener
+  public class ButtonListener implements ActionListener
   {
     public void actionPerformed(ActionEvent e)
     {
@@ -149,9 +158,6 @@ public class MainBoard extends JPanel
     	  }
     	  first_move = false ; 
       }
-      
-      
-
       
       // sets the button icon to xImage, we can change this to set the image of
       // X or O depending on the player...
@@ -196,4 +202,6 @@ public class MainBoard extends JPanel
       button.setEnabled(false);
     }
   }
+  
+
 }
