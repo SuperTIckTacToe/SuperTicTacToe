@@ -63,10 +63,10 @@ public class GameGUI extends JFrame
     setJMenuBar(menuBar);
     add(statsPanel);
     add(mainBoard);
-    pack();
+    pack();    
   }
   
-  public void setGlass(String glass_type)
+  public void setGlass()
   {
     
     final JPanel glass = new JPanel();
@@ -75,15 +75,14 @@ public class GameGUI extends JFrame
     westPanel.setOpaque(false);
     westPanel.setPreferredSize(new Dimension(250,650));
     JLabel winnerPic = new JLabel();
-    assert(glass_type.equals("winner") || glass_type.equals("stalemate"));
-    ImageIcon winPic = new ImageIcon(getClass().getClassLoader().getResource("images/" + glass_type + ".jpg"));
+    ImageIcon winPic = new ImageIcon(getClass().getClassLoader().getResource("images/winner.jpg"));
     winnerPic.setIcon(winPic);
     inner.add(winnerPic);
     JPanel topBar = new JPanel();
     topBar.setPreferredSize(new Dimension(940,20));
     topBar.setOpaque(false);
-    JButton dismiss = new JButton("Dismiss " + glass_type+ " Message");
-    dismiss.setPreferredSize(new Dimension(200,70));
+    JButton dismiss = new JButton("Dismiss Winner Message");
+    dismiss.setPreferredSize(new Dimension(180,70));
     westPanel.add(dismiss);
     dismiss.addActionListener(new ActionListener()
     {

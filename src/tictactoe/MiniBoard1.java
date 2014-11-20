@@ -60,7 +60,7 @@ public class MiniBoard extends JPanel
 	  }
 	  void set_fill( char in )
 	  {
-		  if( in == 'x' || in == 'o'  || in == 'n' )
+		  if( in == 'x' || in == 'o' )
 			  fill = in; 
 	  }
 	  char get_fill()
@@ -73,15 +73,13 @@ public class MiniBoard extends JPanel
 	    this.set_fill('n');
 	    this.setEnabled(true);
 	    this.setIcon(blankImage);
-
 	  }
   }
   
-  public void resetMiniBoard(ActionListener button_listener)
+  public void resetMiniBoard()
   {
     for(Square_Button but: buttons)
     {
-      ButtonInitializer(but, button_listener);
       but.resetButton();
       enable_panel();
     }
@@ -181,7 +179,9 @@ public class MiniBoard extends JPanel
   {	
 	  int row = in / 3; 
 	  int col = in % 3;
-	   
+	 
+	  
+	  
 	  //System.out.println( "row: " + row + " col: " + col );
 	  
 	  char move = buttons.get( in ).get_fill();
@@ -271,22 +271,12 @@ public class MiniBoard extends JPanel
   
   public boolean is_active()
   {
-    if(winner_label == 'n')
-    {
-      for(Square_Button but: buttons)
-    	{
-    	  if(but.get_fill() == 'n')
-    	    return true;
-    	}
-    	return false;
-    }
-    else
-      return false;
+	  return winner_label == 'n' ; 
   }
   
   public char get_winner()
   {
-     return winner_label; 
+	  return winner_label; 
   }
   
   public boolean getWinner()
