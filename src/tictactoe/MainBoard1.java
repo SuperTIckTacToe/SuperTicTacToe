@@ -27,6 +27,7 @@ public class MainBoard extends JPanel
   
   public MainBoard( JLabel output, GameGUI game_in )
   {
+    System.out.println("WHATEVS");
     stats = output; 
     xImagePath = new String("images/X_Image.jpg");
     img = new ImageIcon();
@@ -53,9 +54,8 @@ public class MainBoard extends JPanel
   {
     for(MiniBoard mini: boards)
     {
-      mini.resetMiniBoard(new ButtonListener());
+      mini.resetMiniBoard();
       first_move = true;
-      img = xImage;
     }
   }
 
@@ -67,8 +67,6 @@ public class MainBoard extends JPanel
 	  //System.out.println( "row: " + row + " col: " + col );
 	  
 	  char move = boards.get( in ).get_winner();
-	  if( move == 'n')
-	    return false; 
 	  //need to change this a better name 
 	  int i ; 
 	  
@@ -142,20 +140,9 @@ public class MainBoard extends JPanel
 	 {
 		  boards.get( i ).dissable_panel();
 	 }
-	stats.setText(in + "Wins!!!\n");
-	game.setGlass("winner");
+	stats.setText( in + " Wins!!!");
+	game.setGlass();
   }
-  
-  public boolean check_stalemate()
-  {
-    for(MiniBoard mini: boards)
-    {
-      if(mini.is_active())
-        return false;
-    }
-    return true;
-  }
-
   
   public class ButtonListener implements ActionListener
   {
@@ -179,26 +166,20 @@ public class MainBoard extends JPanel
       {
         img = oImage;
       	button.set_fill('x') ;
-      	stats.setText("Move: O\n");
+      	stats.setText("Move: O");
       }
       else
       {
         img = xImage;
         button.set_fill('o') ;
-        stats.setText("Move: X\n");
+        stats.setText("Move: X");
       }
       
-      if ( boards.get( button.get_parent() ).CheckWinner( button.get_index()  ) || 
-          !boards.get( button.get_parent() ).is_active() )
+      if ( boards.get( button.get_parent() ).CheckWinner( button.get_index()  ) )
       {
     	  //do some check winner stuff 
     	  if ( check_winner( button.get_parent() ))
     		  return ;
-    	  else if (check_stalemate())
-    	  {
-    	    stats.setText("There is a stalemate.. duh duh duh\n");
-    	    game.setGlass("stalemate");
-    	  }
       }
       
       boards.get( button.get_parent() ).dissable_panel();
