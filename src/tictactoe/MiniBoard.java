@@ -30,6 +30,7 @@ public class MiniBoard extends JPanel
   String xImagePath;
   String oImagePath;
   static ImageIcon blankImage;
+  static ImageIcon disabledImage;
   static boolean xWins;
   static BufferedImage bkImage;
   int index; 
@@ -72,25 +73,36 @@ public class MiniBoard extends JPanel
 	  {
 	    this.set_fill('n');
 	    this.setEnabled(true);
-	    this.setIcon(blankImage);
+	    this.setIcon(blankImage); // this also happens in the constructor.... don't need to do it twice?
+	    this.setDisabledIcon(disabledImage);
 
 	  }
   }
   
   public void resetMiniBoard(ActionListener button_listener)
   {
-    for(Square_Button but: buttons)
-    {
-      ButtonInitializer(but, button_listener);
-      but.resetButton();
-      enable_panel();
-    }
+      this.removeAll();
+      buttons.clear();
+      setPreferredSize(new Dimension(210, 210));
+     
+      // Set a 3 by 3 gridlayout for each Mini board:
+      setLayout(new GridLayout( 3, 3, 1, 1 ) );
+      
+      // Initialize buttons:
+      for( int i = 0 ; i < 9 ; ++i )
+      {
+        buttons.add( new Square_Button( i , index  ) ) ; 
+        ButtonInitializer( buttons.get( i ) , button_listener );
+        add( buttons.get( i ) );
+      }
+      winner_label = 'n';
+      this.updateUI();
   }
   
   public MiniBoard( ActionListener button_listener , int _index )
   {
-	index = _index;   
-	  
+    index = _index;   
+    
     /**Color black = new Color(0, 0, 0);   
     setBackground(black);*/
     setLayout(new GridLayout(3,3, 2, 2));   
@@ -104,6 +116,7 @@ public class MiniBoard extends JPanel
     oImage = new ImageIcon(getClass().getClassLoader().getResource("images/O_image.jpg"));
     img = xImage;
     blankImage = new ImageIcon(getClass().getClassLoader().getResource("images/blank.jpg"));
+    disabledImage = new ImageIcon(getClass().getClassLoader().getResource("images/disabled.jpg"));
     
     xLarge = new ImageIcon(getClass().getClassLoader().getResource("images/X_large.png") );
     oLarge = new ImageIcon(getClass().getClassLoader().getResource("images/O_large.png") );
@@ -114,9 +127,9 @@ public class MiniBoard extends JPanel
     // Initialize buttons:
     for( int i = 0 ; i < 9 ; ++i )
     {
-    	buttons.add( new Square_Button( i , index  ) ) ; 
-    	ButtonInitializer( buttons.get( i ) , button_listener );
-    	add( buttons.get( i ) );
+      buttons.add( new Square_Button( i , index  ) ) ; 
+      ButtonInitializer( buttons.get( i ) , button_listener );
+      add( buttons.get( i ) );
     }
     
     
@@ -164,6 +177,7 @@ public class MiniBoard extends JPanel
   public void ButtonInitializer( Square_Button b ,  ActionListener button_listener)
   {
     b.setIcon(blankImage);
+    b.setDisabledIcon(disabledImage);
     b.addActionListener( button_listener );
     
   }

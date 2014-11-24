@@ -22,10 +22,25 @@ public class MainBoard extends JPanel
   String oImagePath;
   static JLabel stats; 
   GameGUI game;
+  JLabel output;
+  
   
   static boolean first_move = true; 
   
-  public MainBoard( JLabel output, GameGUI game_in )
+  public MainBoard( JLabel _output, GameGUI game_in )
+  {
+    output = _output;
+    game = game_in;
+    setup();
+  }
+  
+  public void reset( )
+  {
+    this.removeAll();
+    setup();
+  }
+  
+  private void setup( )
   {
     stats = output; 
     xImagePath = new String("images/X_Image.jpg");
@@ -34,7 +49,6 @@ public class MainBoard extends JPanel
     blankImage = new ImageIcon(getClass().getClassLoader().getResource("images/blank.jpg"));
     oImage = new ImageIcon(getClass().getClassLoader().getResource("images/O_image.jpg"));
     img = xImage;
-    game = game_in;
              
      Color black = new Color(0, 0, 0);
      setBackground(black);
@@ -177,12 +191,14 @@ public class MainBoard extends JPanel
       button.setDisabledIcon( img );
       if(img == xImage)
       {
+        System.out.println("Image is xImage");
         img = oImage;
       	button.set_fill('x') ;
-      	stats.setText("Move: O\n");
+      	stats.setText("Move: O\n"); 
       }
-      else
+      else if( img == oImage )
       {
+        System.out.println("Image is not xImage");
         img = xImage;
         button.set_fill('o') ;
         stats.setText("Move: X\n");
