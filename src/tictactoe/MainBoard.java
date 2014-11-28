@@ -23,7 +23,7 @@ public class MainBoard extends JPanel
 	static JLabel stats; 
 	GameGUI game;
 	JLabel output;
-
+	public ButtonListener button_listern = new ButtonListener(); 
 
 	static boolean first_move = true; 
 
@@ -171,7 +171,7 @@ public class MainBoard extends JPanel
 	}
 
 
-	public class ButtonListener implements ActionListener
+    public class ButtonListener implements ActionListener
 	{
 		public void actionPerformed(ActionEvent e)
 		{

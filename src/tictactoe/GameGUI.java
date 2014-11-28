@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.Iterator;
 
 import javax.swing.*;
 
@@ -75,7 +76,9 @@ public class GameGUI extends JFrame
     			  return; 
     		  }
     		  
-    		  moves_model.remove( moves_model.size() - 1 );
+    		  if( moves_model.size() != 0  )
+    			  moves_model.remove( moves_model.size() - 1 );
+    		  
     		  MainBoard.img = 'x' ==  undo_s.charAt( 0 ) ? MainBoard.xImage : MainBoard.oImage ;
     		  
     		  for( MiniBoard b : MainBoard.boards )
@@ -83,8 +86,28 @@ public class GameGUI extends JFrame
     			  b.dissable_panel();
     		  }
     		  
+    		  
+    		  
     		  MiniBoard board = MainBoard.boards.get( Integer.parseInt( ""+undo_s.charAt( 1 ) ) );
     		  Square_Button temp =  board.buttons.get( Integer.parseInt( ""+undo_s.charAt( 2 ) ) );
+    		  
+    		  if( !board.is_active() )
+    		  {
+    			  board.resetMiniBoard(  mainBoard.button_listern );
+    			  Iterator<String> it = data.get_moves().iterator();
+    			  while( it.hasNext() )
+    			  {
+    				String cur_move = it.next();
+    				if( Integer.parseInt( ""+cur_move.charAt( 1 ) ) ==  board.index )
+    				{
+    					Square_Button cur_button = board.buttons.get( Integer.parseInt( ""+cur_move.charAt( 2 ) ) );
+    					cur_button.set_fill( cur_move.charAt( 0 ) );
+    					cur_button.setDisabledIcon('x' ==  cur_move.charAt( 0 ) ? MainBoard.xImage : MainBoard.oImage );
+    					cur_button.setEnabled( false );
+    				}
+    			  }  
+    		  }
+    		  
     		  temp.set_fill( 'n' );
     		  temp.setDisabledIcon( MiniBoard.disabledImage );
     		  
@@ -105,6 +128,7 @@ public class GameGUI extends JFrame
     redo.addActionListener( new ActionListener() {
 		public void actionPerformed(ActionEvent e) 
 		{
+		  System.out.println( "redo" );
 		  String redo_s = data.redo();
   		  if( redo_s == null )
   		  {
@@ -117,7 +141,12 @@ public class GameGUI extends JFrame
 		  Square_Button temp =  board.buttons.get( Integer.parseInt( ""+redo_s.charAt( 2 ) ) );
   		  temp.set_fill( redo_s.charAt( 0 ) );
   		  temp.setDisabledIcon(redo_s.charAt( 0 ) == 'x' ? MiniBoard.xImage : MiniBoard.oImage );
-		  
+		  for( MiniBoard m : MainBoard.boards )
+		  {
+			  m.dissable_panel();
+		  }
+  		  MainBoard.boards.get( temp.get_index() ).enable_panel();
+  		  
   		  if( board.CheckWinner( Integer.parseInt( ""+redo_s.charAt( 2 ) ) )
   				  &&  mainBoard.check_winner( Integer.parseInt(""+redo_s.charAt( 1 ) ) ) )
   		  {

@@ -47,16 +47,24 @@ public class Game_data
 	
 	public String redo()
 	{	
+		System.out.println( "redo undo moves are :");
+		for( String s : undo_moves )
+			System.out.println( s ); 
+		System.out.println();
 		try 
 		{
 			String move = undo_moves.removeFirst();
 			if( move == null )
+			{
 				return null; 
+			}
+			System.out.println( "undo move is " + move );
 			moves.addLast( move );
 			return move; 
 		}
 		catch(	NoSuchElementException e)
 		{
+			System.out.println( "in catch ");
 			e.printStackTrace( System.out );
 		}
 		return null; 
