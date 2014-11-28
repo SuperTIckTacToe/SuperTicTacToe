@@ -76,7 +76,7 @@ public class GameGUI extends JFrame
     		  }
     		  
     		  moves_model.remove( moves_model.size() - 1 );
-    		  
+    		  MainBoard.img = 'x' ==  undo_s.charAt( 0 ) ? MainBoard.xImage : MainBoard.oImage ;
     		  
     		  for( MiniBoard b : MainBoard.boards )
     		  {
@@ -110,6 +110,8 @@ public class GameGUI extends JFrame
   		  {
   			  return; 
   		  }
+  		  
+  		  MainBoard.img = 'x' ==  redo_s.charAt( 0 ) ? MainBoard.xImage : MainBoard.oImage ; 
   		  
 		  MiniBoard board = MainBoard.boards.get( Integer.parseInt( ""+redo_s.charAt( 1 ) ) );
 		  Square_Button temp =  board.buttons.get( Integer.parseInt( ""+redo_s.charAt( 2 ) ) );

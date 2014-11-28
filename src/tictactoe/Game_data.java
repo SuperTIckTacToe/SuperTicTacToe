@@ -1,6 +1,7 @@
 package tictactoe;
 
 import java.util.ArrayDeque;
+import java.util.NoSuchElementException;
 
 
 public class Game_data 
@@ -45,12 +46,20 @@ public class Game_data
 	}
 	
 	public String redo()
-	{
-		String move = undo_moves.removeFirst();
-		if( move == null )
-			return null; 
-		moves.addLast( move );
-		return move; 
+	{	
+		try 
+		{
+			String move = undo_moves.removeFirst();
+			if( move == null )
+				return null; 
+			moves.addLast( move );
+			return move; 
+		}
+		catch(	NoSuchElementException e)
+		{
+			e.printStackTrace( System.out );
+		}
+		return null; 
 	}
 	
 }
