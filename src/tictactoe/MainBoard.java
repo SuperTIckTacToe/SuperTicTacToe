@@ -176,7 +176,9 @@ public class MainBoard extends JPanel
 		public void actionPerformed(ActionEvent e)
 		{
 			Square_Button button = (Square_Button) e.getSource();
-
+			game.undo.setEnabled( true  );
+			game.redo.setEnabled( false );
+			
 			if( first_move  )
 			{
 				for( int i = 0 ; i < boards.size() ; ++i )
@@ -237,7 +239,7 @@ public class MainBoard extends JPanel
 				}
 			}
 			String move = button.get_fill() + Integer.toString( button.get_parent() ) + Integer.toString( button.get_index() ); 
-			game.moves_model.addElement( move );
+			game.moves_model.addElement( game.moves_model.size()+": " + move );
 			
 			try 
 			{

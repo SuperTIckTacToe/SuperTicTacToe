@@ -27,6 +27,8 @@ public class GameGUI extends JFrame
   DefaultListModel<String>  moves_model; 
   Game_data data;
   
+  JButton undo, redo;
+  
   public GameGUI()
   {
     setVisible(true);
@@ -40,6 +42,8 @@ public class GameGUI extends JFrame
       public void actionPerformed(ActionEvent e)
       {
         mainBoard.resetBoard();
+        data = new Game_data();
+        moves_model.clear();
       }
     });
 
@@ -65,12 +69,20 @@ public class GameGUI extends JFrame
 	data = new Game_data();
     
     JPanel top = new JPanel();
-    JButton undo = new JButton( "Undo" );
+    undo = new JButton( "Undo" );
+    undo.setEnabled( false );
     undo.addActionListener(new ActionListener()
     {
     	  public void actionPerformed(ActionEvent e)
     	  {
+    		  if( !data.can_undo() )
+    			  return;
+    		  redo.setEnabled( true );
     		  String undo_s = data.undo_move(); 
+    		  
+    		  if( !data.can_undo() )
+    			  undo.setEnabled( false );
+    		  
     		  if( undo_s == null )
     		  {
     			  return; 
@@ -110,6 +122,7 @@ public class GameGUI extends JFrame
     		  
     		  temp.set_fill( 'n' );
     		  temp.setDisabledIcon( MiniBoard.disabledImage );
+
     		  
     		  if( data.get_moves().size() == 0  )
     		  {
@@ -124,18 +137,28 @@ public class GameGUI extends JFrame
     	  }		
     });
     top.add( undo );
-    JButton redo = new JButton( "Redo" );
+    redo = new JButton( "Redo" );
+    redo.setEnabled( false );
     redo.addActionListener( new ActionListener() {
 		public void actionPerformed(ActionEvent e) 
 		{
-		  System.out.println( "redo" );
+		  
+		 if( !data.can_redo() )
+			return;
+
 		  String redo_s = data.redo();
+		  undo.setEnabled( true );
+		  
+		  if( !data.can_redo() )
+			  redo.setEnabled( false );
+		  
   		  if( redo_s == null )
   		  {
   			  return; 
   		  }
   		  
   		  MainBoard.img = 'x' ==  redo_s.charAt( 0 ) ? MainBoard.xImage : MainBoard.oImage ; 
+		  moves_model.addElement( moves_model.size()+": " + redo_s );
   		  
 		  MiniBoard board = MainBoard.boards.get( Integer.parseInt( ""+redo_s.charAt( 1 ) ) );
 		  Square_Button temp =  board.buttons.get( Integer.parseInt( ""+redo_s.charAt( 2 ) ) );

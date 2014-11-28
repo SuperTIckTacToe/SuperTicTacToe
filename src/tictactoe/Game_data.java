@@ -70,4 +70,14 @@ public class Game_data
 		return null; 
 	}
 	
+	public Boolean can_redo()
+	{
+		return !undo_moves.isEmpty();
+	}
+	
+	public Boolean can_undo()
+	{
+		return !moves.isEmpty(); 
+	}
+	
 }
