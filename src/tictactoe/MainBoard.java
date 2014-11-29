@@ -27,6 +27,9 @@ public class MainBoard extends JPanel
 
 	static boolean first_move = true; 
 
+	Boolean AImove = true; 
+	ArtificialIntelligence AI = new ArtificialIntelligence(this, "EASY", 3000);
+
 	public MainBoard( JLabel _output, GameGUI game_in )
 	{
 		output = _output;
@@ -171,14 +174,14 @@ public class MainBoard extends JPanel
 	}
 
 
-    public class ButtonListener implements ActionListener
+	public class ButtonListener implements ActionListener
 	{
 		public void actionPerformed(ActionEvent e)
 		{
 			Square_Button button = (Square_Button) e.getSource();
 			game.undo.setEnabled( true  );
 			game.redo.setEnabled( false );
-			
+
 			if( first_move  )
 			{
 				for( int i = 0 ; i < boards.size() ; ++i )
@@ -240,7 +243,7 @@ public class MainBoard extends JPanel
 			}
 			String move = button.get_fill() + Integer.toString( button.get_parent() ) + Integer.toString( button.get_index() ); 
 			game.moves_model.addElement( game.moves_model.size()+": " + move );
-			
+
 			try 
 			{
 				game.data.add( move );
@@ -251,9 +254,16 @@ public class MainBoard extends JPanel
 				e1.printStackTrace();
 				System.out.println( "you sent a bad move in "); 
 			}
-			
-			
-			
+
+			if( AImove  )
+			{
+				AImove = false;
+				// boards.get(button.get_index())
+				AI.makeMove(button.get_index());
+				AImove = true;
+			}
+
+
 			// So that the button can't be clicked again. It currently sets the
 			// button to grey, but it looks like that can be changed with UIManager..
 			button.setEnabled(false);
