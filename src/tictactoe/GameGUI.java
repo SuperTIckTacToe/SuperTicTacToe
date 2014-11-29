@@ -83,11 +83,6 @@ public class GameGUI extends JFrame
     		  if( !data.can_undo() )
     			  undo.setEnabled( false );
     		  
-    		  if( undo_s == null )
-    		  {
-    			  return; 
-    		  }
-    		  
     		  if( moves_model.size() != 0  )
     			  moves_model.remove( moves_model.size() - 1 );
     		  
@@ -152,23 +147,31 @@ public class GameGUI extends JFrame
 		  if( !data.can_redo() )
 			  redo.setEnabled( false );
 		  
-  		  if( redo_s == null )
-  		  {
-  			  return; 
-  		  }
-  		  
   		  MainBoard.img = 'x' ==  redo_s.charAt( 0 ) ? MainBoard.xImage : MainBoard.oImage ; 
 		  moves_model.addElement( moves_model.size()+": " + redo_s );
   		  
 		  MiniBoard board = MainBoard.boards.get( Integer.parseInt( ""+redo_s.charAt( 1 ) ) );
 		  Square_Button temp =  board.buttons.get( Integer.parseInt( ""+redo_s.charAt( 2 ) ) );
-  		  temp.set_fill( redo_s.charAt( 0 ) );
-  		  temp.setDisabledIcon(redo_s.charAt( 0 ) == 'x' ? MiniBoard.xImage : MiniBoard.oImage );
-		  for( MiniBoard m : MainBoard.boards )
+		  
+		  temp.set_fill( redo_s.charAt( 0 ) );
+		  temp.setDisabledIcon(redo_s.charAt( 0 ) == 'x' ? MiniBoard.xImage : MiniBoard.oImage );
+		  temp.setEnabled( false );
+		  
+		  if(MainBoard.boards.get( temp.get_index() ).is_active() )
 		  {
-			  m.dissable_panel();
+			  for( MiniBoard m : MainBoard.boards )
+			  {
+				  m.dissable_panel();
+			  }
 		  }
-  		  MainBoard.boards.get( temp.get_index() ).enable_panel();
+		  else
+		  {
+			  for( MiniBoard m : MainBoard.boards )
+			  {
+				  m.enable_panel();
+			  }
+		  }
+		  MainBoard.boards.get( temp.get_index() ).enable_panel();
   		  
   		  if( board.CheckWinner( Integer.parseInt( ""+redo_s.charAt( 2 ) ) )
   				  &&  mainBoard.check_winner( Integer.parseInt(""+redo_s.charAt( 1 ) ) ) )
