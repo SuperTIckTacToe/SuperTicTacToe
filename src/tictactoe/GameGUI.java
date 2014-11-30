@@ -5,8 +5,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.Iterator;
 
 import javax.swing.*;
+
+import tictactoe.MiniBoard.Square_Button;
 
 public class GameGUI extends JFrame
 {
@@ -20,6 +23,11 @@ public class GameGUI extends JFrame
   MainBoard mainBoard;
   JPanel statsPanel;
   JLabel stats;
+  JList<String> moves_list;
+  DefaultListModel<String>  moves_model; 
+  Game_data data;
+  
+  JButton undo, redo;
   
   public GameGUI()
   {
@@ -34,6 +42,8 @@ public class GameGUI extends JFrame
       public void actionPerformed(ActionEvent e)
       {
         mainBoard.resetBoard();
+        data = new Game_data();
+        moves_model.clear();
       }
     });
 
@@ -51,11 +61,139 @@ public class GameGUI extends JFrame
     // It is currently set to a blue color just so we can see where it is in the
     // GUI.
     statsPanel = new JPanel();
+    statsPanel.setLayout( new BoxLayout( statsPanel , BoxLayout.PAGE_AXIS ) );
     statsPanel.setPreferredSize(new Dimension(250,600));
     Color panelCol = new Color(0, 128, 255);
     statsPanel.setBackground(panelCol);
+    
+	data = new Game_data();
+    
+    JPanel top = new JPanel();
+    undo = new JButton( "Undo" );
+    undo.setEnabled( false );
+    undo.addActionListener(new ActionListener()
+    {
+    	  public void actionPerformed(ActionEvent e)
+    	  {
+    		  if( !data.can_undo() )
+    			  return;
+    		  redo.setEnabled( true );
+    		  String undo_s = data.undo_move(); 
+    		  
+    		  if( !data.can_undo() )
+    			  undo.setEnabled( false );
+    		  
+    		  if( moves_model.size() != 0  )
+    			  moves_model.remove( moves_model.size() - 1 );
+    		  
+    		  MainBoard.img = 'x' ==  undo_s.charAt( 0 ) ? MainBoard.xImage : MainBoard.oImage ;
+    		  
+    		  for( MiniBoard b : MainBoard.boards )
+    		  {
+    			  b.dissable_panel();
+    		  }
+    		  
+    		  
+    		  
+    		  MiniBoard board = MainBoard.boards.get( Integer.parseInt( ""+undo_s.charAt( 1 ) ) );
+    		  Square_Button temp =  board.buttons.get( Integer.parseInt( ""+undo_s.charAt( 2 ) ) );
+    		  
+    		  if( !board.is_active() )
+    		  {
+    			  board.resetMiniBoard(  mainBoard.button_listern );
+    			  Iterator<String> it = data.get_moves().iterator();
+    			  while( it.hasNext() )
+    			  {
+    				String cur_move = it.next();
+    				if( Integer.parseInt( ""+cur_move.charAt( 1 ) ) ==  board.index )
+    				{
+    					Square_Button cur_button = board.buttons.get( Integer.parseInt( ""+cur_move.charAt( 2 ) ) );
+    					cur_button.set_fill( cur_move.charAt( 0 ) );
+    					cur_button.setDisabledIcon('x' ==  cur_move.charAt( 0 ) ? MainBoard.xImage : MainBoard.oImage );
+    					cur_button.setEnabled( false );
+    				}
+    			  }  
+    		  }
+    		  
+    		  temp.set_fill( 'n' );
+    		  temp.setDisabledIcon( MiniBoard.disabledImage );
+
+    		  
+    		  if( data.get_moves().size() == 0  )
+    		  {
+    			  MainBoard.first_move = true; 
+    			  MainBoard.img = MainBoard.xImage; 
+    			  for( MiniBoard b : MainBoard.boards )
+    				  b.enable_panel();
+    			  return; 
+    		  }
+    		  
+    		  board.enable_panel();
+    	  }		
+    });
+    top.add( undo );
+    redo = new JButton( "Redo" );
+    redo.setEnabled( false );
+    redo.addActionListener( new ActionListener() {
+		public void actionPerformed(ActionEvent e) 
+		{
+		  
+		 if( !data.can_redo() )
+			return;
+
+		  String redo_s = data.redo();
+		  undo.setEnabled( true );
+		  
+		  if( !data.can_redo() )
+			  redo.setEnabled( false );
+		  
+  		  MainBoard.img = 'x' ==  redo_s.charAt( 0 ) ? MainBoard.xImage : MainBoard.oImage ; 
+		  moves_model.addElement( moves_model.size()+": " + redo_s );
+  		  
+		  MiniBoard board = MainBoard.boards.get( Integer.parseInt( ""+redo_s.charAt( 1 ) ) );
+		  Square_Button temp =  board.buttons.get( Integer.parseInt( ""+redo_s.charAt( 2 ) ) );
+		  
+		  temp.set_fill( redo_s.charAt( 0 ) );
+		  temp.setDisabledIcon(redo_s.charAt( 0 ) == 'x' ? MiniBoard.xImage : MiniBoard.oImage );
+		  temp.setEnabled( false );
+		  
+		  if(MainBoard.boards.get( temp.get_index() ).is_active() )
+		  {
+			  for( MiniBoard m : MainBoard.boards )
+			  {
+				  m.dissable_panel();
+			  }
+		  }
+		  else
+		  {
+			  for( MiniBoard m : MainBoard.boards )
+			  {
+				  m.enable_panel();
+			  }
+		  }
+		  MainBoard.boards.get( temp.get_index() ).enable_panel();
+  		  
+  		  if( board.CheckWinner( Integer.parseInt( ""+redo_s.charAt( 2 ) ) )
+  				  &&  mainBoard.check_winner( Integer.parseInt(""+redo_s.charAt( 1 ) ) ) )
+  		  {
+  			 mainBoard.winner( redo_s.charAt( 0 ) );
+  		  }
+		}
+    });
+    top.add( redo );
+    
+    statsPanel.add( top ); 
+    
     stats = new JLabel() ;
     statsPanel.add( stats ); 
+    //add a jlist with a scroable pannel 
+    // give member variable of the itator 
+    // 
+    moves_model = new DefaultListModel<String>();
+    moves_list = new JList<String>( moves_model ); 
+    JScrollPane move_p = new JScrollPane( moves_list ); 
+    //stats.add( moves_list );
+    statsPanel.add( move_p );
     
     mainBoard = new MainBoard( stats, this );
     
