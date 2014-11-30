@@ -261,6 +261,7 @@ public class GameGUI extends JFrame
 	    gameType.setFont(new Font("SansSerif", Font.BOLD, 36));
 	    glass.setPreferredSize(new Dimension(800,800));
 	    JButton local = new JButton("Local 2 Player");
+	    //pat modified action listener
 	    local.addActionListener(new ActionListener()
 	    {
 	    	public void actionPerformed(ActionEvent e)
@@ -273,6 +274,7 @@ public class GameGUI extends JFrame
 	    {
 	    	public void actionPerformed(ActionEvent e)
 	    	{
+	    	  mainBoard.turnAIOn();
 	    		glass.setVisible(false);
 	    	}
 	    });
@@ -282,6 +284,8 @@ public class GameGUI extends JFrame
 	    	public void actionPerformed(ActionEvent e)
 	    	{
 	    		glass.setVisible(false);
+	    		JOptionPane.showMessageDialog(GameGUI.this, "Connecting to Opponent", "Connecting", JOptionPane.INFORMATION_MESSAGE);
+	    		mainBoard.startOnlinePlay();
 	    	}
 	    });
 	    glass.addMouseListener(new MouseAdapter()

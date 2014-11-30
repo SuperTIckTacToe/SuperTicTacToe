@@ -10,6 +10,10 @@ import javax.swing.*;
 import tictactoe.MiniBoard;
 import tictactoe.MiniBoard.Square_Button;
 
+//pat added this
+import network.*;
+import java.io.IOException;
+
 public class MainBoard extends JPanel
 {
 	public static ArrayList< MiniBoard > boards = new ArrayList<MiniBoard>();
@@ -24,10 +28,18 @@ public class MainBoard extends JPanel
 	GameGUI game;
 	JLabel output;
 	public ButtonListener button_listern = new ButtonListener(); 
+	private boolean online; //pat added this
+  private ClientSideSocket socket; //pat added this
+  //private String serverIP = "127.0.0.1"; //pat added this
+  private String serverIP = "54.148.133.158"; //pat added this
+  private int portNum = 45000; //pat added this
+  private boolean waiting; //pat added this
+  boolean gameOver = false; // pat added this
+  boolean onlinePlayInitialized = false; //pat added this
 
 	static boolean first_move = true; 
 
-	Boolean AImove = true; 
+	Boolean AImove = false; 
 	ArtificialIntelligence AI = new ArtificialIntelligence(this, "EASY", 3000);
 
 	public MainBoard( JLabel _output, GameGUI game_in )
@@ -65,6 +77,41 @@ public class MainBoard extends JPanel
 			add( boards.get( i ) );
 		} 
 	}
+	
+//pat added this function
+  public void startOnlinePlay()
+  {
+    online = true;
+    waiting = false;
+    try
+    {
+      socket = new ClientSideSocket(serverIP, portNum);
+      socket.connectToServer();
+      System.out.println("player has connected");
+      NetworkExchange firstPlayerCheck = socket.recvObject();
+      System.out.println("player found out if player1 or not");
+      if(!firstPlayerCheck.isPlayer1())
+      {
+        System.out.println("says that this is player2");
+        waiting = true;
+        NetworkExchange firstMove = socket.recvObject();
+        onlinePlayInitialized = true;
+        //  I know this line is long
+        boards.get(firstMove.getParentIndex()).buttons.get(firstMove.getButtonIndex()).doClick();
+      }
+      else
+      {
+        onlinePlayInitialized = true;
+      }
+    }
+    catch(IOException e)
+    {
+      online = false;
+      JOptionPane.showMessageDialog(game, 
+          "Opponent has left the game. Switching to Local Play.", 
+          "Disconnected", JOptionPane.INFORMATION_MESSAGE);
+    }
+  }
 
 	public void resetBoard()
 	{
@@ -178,9 +225,18 @@ public class MainBoard extends JPanel
 	{
 		public void actionPerformed(ActionEvent e)
 		{
+		//pat added this if statement
+      if(online && !onlinePlayInitialized)
+      {
+        return;
+      }
 			Square_Button button = (Square_Button) e.getSource();
-			game.undo.setEnabled( true  );
-			game.redo.setEnabled( false );
+			//pat put this block in this if statement
+			if(!online)
+			{
+			  game.undo.setEnabled( true  );
+			  game.redo.setEnabled( false );
+			}
 
 			if( first_move  )
 			{
@@ -219,40 +275,50 @@ public class MainBoard extends JPanel
 			{
 				//do some check winner stuff 
 				if ( check_winner( button.get_parent() ))
-					return ;
+				{
+				  gameOver = true; //pat added brackets and this line
+          //return ;
+				}
 				else if (check_stalemate())
 				{
 					stats.setText("There is a stalemate.. duh duh duh\n");
 					game.setGlass("stalemate");
 				}
 			}
-
-			boards.get( button.get_parent() ).dissable_panel();
-			if(boards.get( button.get_index() ).is_active() )
+			//pat put if statement around this block
+			if(!gameOver)
 			{
-				boards.get( button.get_index() ).enable_panel();
+			  boards.get( button.get_parent() ).dissable_panel();
+			  if(boards.get( button.get_index() ).is_active() )
+			  {
+				  boards.get( button.get_index() ).enable_panel();
+			  }
+			  else
+			  {
+				  first_move = true; 
+				  for( int i = 0 ; i < boards.size() ; ++i )
+				  {
+					  if( boards.get( i ).is_active() )
+						  boards.get( i ).enable_panel();
+				  }
+			  }
 			}
-			else
+			//pat put this block in this if statement
+			if(!online)
 			{
-				first_move = true; 
-				for( int i = 0 ; i < boards.size() ; ++i )
-				{
-					if( boards.get( i ).is_active() )
-						boards.get( i ).enable_panel();
-				}
-			}
-			String move = button.get_fill() + Integer.toString( button.get_parent() ) + Integer.toString( button.get_index() ); 
-			game.moves_model.addElement( game.moves_model.size()+": " + move );
+			  String move = button.get_fill() + Integer.toString( button.get_parent() ) + Integer.toString( button.get_index() ); 
+			  game.moves_model.addElement( game.moves_model.size()+": " + move );
 
-			try 
-			{
-				game.data.add( move );
-			} 
-			catch (InvalidInputException e1) 
-			{
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-				System.out.println( "you sent a bad move in "); 
+			  try 
+			  {
+			    game.data.add( move );
+			  } 
+			  catch (InvalidInputException e1) 
+			  {
+				//  TODO Auto-generated catch block
+				  e1.printStackTrace();
+				  System.out.println( "you sent a bad move in "); 
+			  }
 			}
 
 			if( AImove  )
@@ -267,7 +333,42 @@ public class MainBoard extends JPanel
 			// So that the button can't be clicked again. It currently sets the
 			// button to grey, but it looks like that can be changed with UIManager..
 			button.setEnabled(false);
+			
+		//pat added following if statement
+      if(online && !waiting)
+      {
+        try
+        {
+          NetworkExchange moveData = new NetworkExchange("user"); 
+          moveData.setButtonIndex(button.get_index());
+          moveData.setParentIndex(button.get_parent());
+          if(gameOver)
+          {
+            moveData.setGameOver(gameOver);
+          }
+          socket.sendToServer(moveData);
+          if(!gameOver)
+          {
+            moveData = socket.recvObject();
+            waiting = true;
+            boards.get(moveData.getParentIndex()).buttons.get(moveData.getButtonIndex()).doClick();
+          }
+        }
+        catch(IOException exception)
+        {
+          online = false;
+          JOptionPane.showMessageDialog(game, 
+              "Opponent has left the game. Switching to Local Play.", 
+              "Disconnected", JOptionPane.INFORMATION_MESSAGE);
+        }
+      }
+      waiting = false; //pat added this
 		}
+	}
+	//pat added this function
+	public void turnAIOn()
+	{
+	  AImove = true;
 	}
 
 
