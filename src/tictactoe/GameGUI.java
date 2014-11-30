@@ -63,6 +63,7 @@ public class GameGUI extends JFrame
     setJMenuBar(menuBar);
     add(statsPanel);
     add(mainBoard);
+    setStartScreen();
     pack();
   }
   
@@ -108,6 +109,57 @@ public class GameGUI extends JFrame
     setGlassPane(glass);
     glass.setVisible(true);
     glass.setOpaque(false);
+  }
+  
+  public void setStartScreen()
+  {
+	    final JPanel glass = new JPanel();
+	    glass.setLayout(new FlowLayout());
+	    glass.setBackground(new Color(226,237,135));
+	    JLabel pic = new JLabel();
+	    ImageIcon startIcon = new ImageIcon(getClass().getClassLoader().getResource("images/front.jpg"));
+	    pic.setIcon(startIcon);
+	    JLabel gameType = new JLabel("Which type of game would you like to play?");
+	    gameType.setFont(new Font("SansSerif", Font.BOLD, 36));
+	    glass.setPreferredSize(new Dimension(800,800));
+	    JButton local = new JButton("Local 2 Player");
+	    local.addActionListener(new ActionListener()
+	    {
+	    	public void actionPerformed(ActionEvent e)
+	    	{
+	    		glass.setVisible(false);
+	    	}
+	    });
+	    JButton comp = new JButton("Play the Computer");
+	    comp.addActionListener(new ActionListener()
+	    {
+	    	public void actionPerformed(ActionEvent e)
+	    	{
+	    		glass.setVisible(false);
+	    	}
+	    });
+	    JButton network = new JButton("Play Online");
+	    network.addActionListener(new ActionListener()
+	    {
+	    	public void actionPerformed(ActionEvent e)
+	    	{
+	    		glass.setVisible(false);
+	    	}
+	    });
+	    glass.addMouseListener(new MouseAdapter()
+	    {
+
+	      @Override
+	      public void mouseClicked(MouseEvent e)
+	      {}
+	    });
+	    glass.add(gameType);
+	    glass.add(local);
+	    glass.add(comp);
+	    glass.add(network);
+	    glass.add(pic);
+	    setGlassPane(glass);
+	    glass.setVisible(true);
   }
   
 }
