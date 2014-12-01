@@ -12,6 +12,7 @@ import tictactoe.MiniBoard.Square_Button;
 
 //pat added this
 import network.*;
+
 import java.io.IOException;
 
 public class MainBoard extends JPanel
@@ -34,8 +35,9 @@ public class MainBoard extends JPanel
   private String serverIP = "54.148.133.158"; //pat added this
   private int portNum = 45000; //pat added this
   private boolean waiting; //pat added this
-  boolean gameOver = false; // pat added this
-  boolean onlinePlayInitialized = false; //pat added this
+  private boolean gameOver = false; // pat added this
+  private boolean onlinePlayInitialized = false; //pat added this
+  private JDialog waitMessage; //pat added this
 
 	static boolean first_move = true; 
 
@@ -83,8 +85,12 @@ public class MainBoard extends JPanel
   {
     online = true;
     waiting = false;
+    waitMessage = new JDialog(game, "     Please Wait...");
+    waitMessage.setSize(200, 0);
+    waitMessage.setResizable(false);
     try
     {
+      addWaitMessage(true);
       socket = new ClientSideSocket(serverIP, portNum);
       socket.connectToServer();
       System.out.println("player has connected");
@@ -95,12 +101,14 @@ public class MainBoard extends JPanel
         System.out.println("says that this is player2");
         waiting = true;
         NetworkExchange firstMove = socket.recvObject();
+        addWaitMessage(false);
         onlinePlayInitialized = true;
         //  I know this line is long
         boards.get(firstMove.getParentIndex()).buttons.get(firstMove.getButtonIndex()).doClick();
       }
       else
       {
+        addWaitMessage(false);
         onlinePlayInitialized = true;
       }
     }
@@ -346,17 +354,24 @@ public class MainBoard extends JPanel
           {
             moveData.setGameOver(gameOver);
           }
+          onlinePlayInitialized = false;
+          addWaitMessage(true);
           socket.sendToServer(moveData);
+          onlinePlayInitialized = true;
           if(!gameOver)
           {
+            onlinePlayInitialized = false;
             moveData = socket.recvObject();
+            onlinePlayInitialized = true;
             waiting = true;
             boards.get(moveData.getParentIndex()).buttons.get(moveData.getButtonIndex()).doClick();
           }
+          addWaitMessage(false);
         }
         catch(IOException exception)
         {
           online = false;
+          addWaitMessage(false);
           JOptionPane.showMessageDialog(game, 
               "Opponent has left the game. Switching to Local Play.", 
               "Disconnected", JOptionPane.INFORMATION_MESSAGE);
@@ -372,5 +387,17 @@ public class MainBoard extends JPanel
 	  AImove = true;
 	}
 
-
+	private void addWaitMessage(boolean add)
+	{
+	  if(add)
+	  {
+	    waitMessage.setVisible(true);
+	    waitMessage.setLocationRelativeTo(null);
+	  }
+	  else
+	  {
+	    waitMessage.setVisible(false);
+	  }
+	}
+	
 }
