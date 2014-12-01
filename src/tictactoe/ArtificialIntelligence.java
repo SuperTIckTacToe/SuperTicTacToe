@@ -87,7 +87,8 @@ public class ArtificialIntelligence
       }
       else  move = abs( (randMove.nextInt() % 9) );
     }
-    while(mainBoard.boards.get( miniIndex ).buttons.get( move ).get_fill() != 'n');
+    while(mainBoard.boards.get( miniIndex ).buttons.get( move ).get_fill() != 
+        'n');
         
     mainBoard.boards.get( miniIndex ).buttons.get( move ).doClick(); 
 	  
@@ -99,160 +100,231 @@ public class ArtificialIntelligence
 	  int square = -1;
 	  //top row
 	  if((mainBoard.boards.get( miniIndex ).buttons.get(0).get_fill() == side)
-	      && (mainBoard.boards.get( miniIndex ).buttons.get(1).get_fill() == side)
-	      && (mainBoard.boards.get( miniIndex ).buttons.get(2).get_fill() == 'n'))
+	      && (mainBoard.boards.get( 
+	          miniIndex ).buttons.get(1).get_fill() == side)
+	      && (mainBoard.boards.get( 
+	          miniIndex ).buttons.get(2).get_fill() == 'n'))
 	  {
 	    square = 2;
 	  }
-	  else if((mainBoard.boards.get( miniIndex ).buttons.get(0).get_fill() == side)
-        && (mainBoard.boards.get( miniIndex ).buttons.get(2).get_fill() == side)
-        && (mainBoard.boards.get( miniIndex ).buttons.get(1).get_fill() == 'n'))
+	  else if((mainBoard.boards.get( 
+	      miniIndex ).buttons.get(0).get_fill() == side)
+        && (mainBoard.boards.get( 
+            miniIndex ).buttons.get(2).get_fill() == side)
+        && (mainBoard.boards.get( 
+            miniIndex ).buttons.get(1).get_fill() == 'n'))
     {
       square = 1;
     }
-	  else if((mainBoard.boards.get( miniIndex ).buttons.get(1).get_fill() == side)
-        && (mainBoard.boards.get( miniIndex ).buttons.get(2).get_fill() == side)
-        && (mainBoard.boards.get( miniIndex ).buttons.get(0).get_fill() == 'n'))
+	  else if((mainBoard.boards.get( 
+	      miniIndex ).buttons.get(1).get_fill() == side)
+        && (mainBoard.boards.get( 
+            miniIndex ).buttons.get(2).get_fill() == side)
+        && (mainBoard.boards.get( 
+            miniIndex ).buttons.get(0).get_fill() == 'n'))
     {
       square = 0;
     }
 	  
 	  //mid row
-	  else if((mainBoard.boards.get( miniIndex ).buttons.get(3).get_fill() == side)
-        && (mainBoard.boards.get( miniIndex ).buttons.get(4).get_fill() == side)
-        && (mainBoard.boards.get( miniIndex ).buttons.get(5).get_fill() == 'n'))
+	  else if((mainBoard.boards.get( 
+	      miniIndex ).buttons.get(3).get_fill() == side)
+        && (mainBoard.boards.get( 
+            miniIndex ).buttons.get(4).get_fill() == side)
+        && (mainBoard.boards.get( 
+            miniIndex ).buttons.get(5).get_fill() == 'n'))
     {
       square = 5;
     }
-    else if((mainBoard.boards.get( miniIndex ).buttons.get(3).get_fill() == side)
-        && (mainBoard.boards.get( miniIndex ).buttons.get(5).get_fill() == side)
-        && (mainBoard.boards.get( miniIndex ).buttons.get(4).get_fill() == 'n'))
+    else if((mainBoard.boards.get( 
+        miniIndex ).buttons.get(3).get_fill() == side)
+        && (mainBoard.boards.get( 
+            miniIndex ).buttons.get(5).get_fill() == side)
+        && (mainBoard.boards.get( 
+            miniIndex ).buttons.get(4).get_fill() == 'n'))
     {
       square = 4;
     }
-    else if((mainBoard.boards.get( miniIndex ).buttons.get(4).get_fill() == side)
-        && (mainBoard.boards.get( miniIndex ).buttons.get(5).get_fill() == side)
-        && (mainBoard.boards.get( miniIndex ).buttons.get(3).get_fill() == 'n'))
+    else if((mainBoard.boards.get( 
+        miniIndex ).buttons.get(4).get_fill() == side)
+        && (mainBoard.boards.get( 
+            miniIndex ).buttons.get(5).get_fill() == side)
+        && (mainBoard.boards.get( 
+            miniIndex ).buttons.get(3).get_fill() == 'n'))
     {
       square = 3;
     }
 	  
 	  //bot row
-    else if((mainBoard.boards.get( miniIndex ).buttons.get(6).get_fill() == side)
-        && (mainBoard.boards.get( miniIndex ).buttons.get(7).get_fill() == side)
-        && (mainBoard.boards.get( miniIndex ).buttons.get(8).get_fill() == 'n'))
+    else if((mainBoard.boards.get( 
+        miniIndex ).buttons.get(6).get_fill() == side)
+        && (mainBoard.boards.get( 
+            miniIndex ).buttons.get(7).get_fill() == side)
+        && (mainBoard.boards.get( 
+            miniIndex ).buttons.get(8).get_fill() == 'n'))
     {
       square = 8;
     }
-    else if((mainBoard.boards.get( miniIndex ).buttons.get(6).get_fill() == side)
-        && (mainBoard.boards.get( miniIndex ).buttons.get(8).get_fill() == side)
-        && (mainBoard.boards.get( miniIndex ).buttons.get(7).get_fill() == 'n'))
+    else if((mainBoard.boards.get( 
+        miniIndex ).buttons.get(6).get_fill() == side)
+        && (mainBoard.boards.get( 
+            miniIndex ).buttons.get(8).get_fill() == side)
+        && (mainBoard.boards.get( 
+            miniIndex ).buttons.get(7).get_fill() == 'n'))
     {
       square = 7;
     }
-    else if((mainBoard.boards.get( miniIndex ).buttons.get(7).get_fill() == side)
-        && (mainBoard.boards.get( miniIndex ).buttons.get(8).get_fill() == side)
-        && (mainBoard.boards.get( miniIndex ).buttons.get(6).get_fill() == 'n'))
+    else if((mainBoard.boards.get( 
+        miniIndex ).buttons.get(7).get_fill() == side)
+        && (mainBoard.boards.get( 
+            miniIndex ).buttons.get(8).get_fill() == side)
+        && (mainBoard.boards.get( 
+            miniIndex ).buttons.get(6).get_fill() == 'n'))
     {
       square = 6;
     }
 	  
 	  //left col
-    else if((mainBoard.boards.get( miniIndex ).buttons.get(0).get_fill() == side)
-        && (mainBoard.boards.get( miniIndex ).buttons.get(3).get_fill() == side)
-        && (mainBoard.boards.get( miniIndex ).buttons.get(6).get_fill() == 'n'))
+    else if((mainBoard.boards.get( 
+        miniIndex ).buttons.get(0).get_fill() == side)
+        && (mainBoard.boards.get( 
+            miniIndex ).buttons.get(3).get_fill() == side)
+        && (mainBoard.boards.get( 
+            miniIndex ).buttons.get(6).get_fill() == 'n'))
     {
       square = 6;
     }
-    else if((mainBoard.boards.get( miniIndex ).buttons.get(0).get_fill() == side)
-        && (mainBoard.boards.get( miniIndex ).buttons.get(6).get_fill() == side)
-        && (mainBoard.boards.get( miniIndex ).buttons.get(3).get_fill() == 'n'))
+    else if((mainBoard.boards.get( 
+        miniIndex ).buttons.get(0).get_fill() == side)
+        && (mainBoard.boards.get( 
+            miniIndex ).buttons.get(6).get_fill() == side)
+        && (mainBoard.boards.get( 
+            miniIndex ).buttons.get(3).get_fill() == 'n'))
     {
       square = 3;
     }
-    else if((mainBoard.boards.get( miniIndex ).buttons.get(3).get_fill() == side)
-        && (mainBoard.boards.get( miniIndex ).buttons.get(6).get_fill() == side)
-        && (mainBoard.boards.get( miniIndex ).buttons.get(0).get_fill() == 'n'))
+    else if((mainBoard.boards.get( 
+        miniIndex ).buttons.get(3).get_fill() == side)
+        && (mainBoard.boards.get( 
+            miniIndex ).buttons.get(6).get_fill() == side)
+        && (mainBoard.boards.get( 
+            miniIndex ).buttons.get(0).get_fill() == 'n'))
     {
       square = 0;
     }
 	  
 	  //mid col
-    else if((mainBoard.boards.get( miniIndex ).buttons.get(1).get_fill() == side)
-        && (mainBoard.boards.get( miniIndex ).buttons.get(4).get_fill() == side)
-        && (mainBoard.boards.get( miniIndex ).buttons.get(7).get_fill() == 'n'))
+    else if((mainBoard.boards.get( 
+        miniIndex ).buttons.get(1).get_fill() == side)
+        && (mainBoard.boards.get( 
+            miniIndex ).buttons.get(4).get_fill() == side)
+        && (mainBoard.boards.get( 
+            miniIndex ).buttons.get(7).get_fill() == 'n'))
     {
       square = 7;
     }
-    else if((mainBoard.boards.get( miniIndex ).buttons.get(1).get_fill() == side)
-        && (mainBoard.boards.get( miniIndex ).buttons.get(7).get_fill() == side)
-        && (mainBoard.boards.get( miniIndex ).buttons.get(4).get_fill() == 'n'))
+    else if((mainBoard.boards.get( 
+        miniIndex ).buttons.get(1).get_fill() == side)
+        && (mainBoard.boards.get( 
+            miniIndex ).buttons.get(7).get_fill() == side)
+        && (mainBoard.boards.get( 
+            miniIndex ).buttons.get(4).get_fill() == 'n'))
     {
       square = 4;
     }
-    else if((mainBoard.boards.get( miniIndex ).buttons.get(4).get_fill() == side)
-        && (mainBoard.boards.get( miniIndex ).buttons.get(7).get_fill() == side)
-        && (mainBoard.boards.get( miniIndex ).buttons.get(1).get_fill() == 'n'))
+    else if((mainBoard.boards.get( 
+        miniIndex ).buttons.get(4).get_fill() == side)
+        && (mainBoard.boards.get( 
+            miniIndex ).buttons.get(7).get_fill() == side)
+        && (mainBoard.boards.get( 
+            miniIndex ).buttons.get(1).get_fill() == 'n'))
     {
       square = 1;
     }
 	  
 	  //right col
-    else if((mainBoard.boards.get( miniIndex ).buttons.get(2).get_fill() == side)
-        && (mainBoard.boards.get( miniIndex ).buttons.get(5).get_fill() == side)
-        && (mainBoard.boards.get( miniIndex ).buttons.get(8).get_fill() == 'n'))
+    else if((mainBoard.boards.get( 
+        miniIndex ).buttons.get(2).get_fill() == side)
+        && (mainBoard.boards.get( 
+            miniIndex ).buttons.get(5).get_fill() == side)
+        && (mainBoard.boards.get( 
+            miniIndex ).buttons.get(8).get_fill() == 'n'))
     {
       square = 8;
     }
-    else if((mainBoard.boards.get( miniIndex ).buttons.get(2).get_fill() == side)
-        && (mainBoard.boards.get( miniIndex ).buttons.get(8).get_fill() == side)
-        && (mainBoard.boards.get( miniIndex ).buttons.get(5).get_fill() == 'n'))
+    else if((mainBoard.boards.get( 
+        miniIndex ).buttons.get(2).get_fill() == side)
+        && (mainBoard.boards.get( 
+            miniIndex ).buttons.get(8).get_fill() == side)
+        && (mainBoard.boards.get( 
+            miniIndex ).buttons.get(5).get_fill() == 'n'))
     {
       square = 5;
     }
-    else if((mainBoard.boards.get( miniIndex ).buttons.get(5).get_fill() == side)
-        && (mainBoard.boards.get( miniIndex ).buttons.get(8).get_fill() == side)
-        && (mainBoard.boards.get( miniIndex ).buttons.get(2).get_fill() == 'n'))
+    else if((mainBoard.boards.get( 
+        miniIndex ).buttons.get(5).get_fill() == side)
+        && (mainBoard.boards.get( 
+            miniIndex ).buttons.get(8).get_fill() == side)
+        && (mainBoard.boards.get( 
+            miniIndex ).buttons.get(2).get_fill() == 'n'))
     {
       square = 2;
     }
 	  
 	  //0,4,8 diag
-    else if((mainBoard.boards.get( miniIndex ).buttons.get(0).get_fill() == side)
-        && (mainBoard.boards.get( miniIndex ).buttons.get(4).get_fill() == side)
-        && (mainBoard.boards.get( miniIndex ).buttons.get(8).get_fill() == 'n'))
+    else if((mainBoard.boards.get( 
+        miniIndex ).buttons.get(0).get_fill() == side)
+        && (mainBoard.boards.get( 
+            miniIndex ).buttons.get(4).get_fill() == side)
+        && (mainBoard.boards.get( 
+            miniIndex ).buttons.get(8).get_fill() == 'n'))
     {
       square = 8;
     }
-    else if((mainBoard.boards.get( miniIndex ).buttons.get(0).get_fill() == side)
-        && (mainBoard.boards.get( miniIndex ).buttons.get(8).get_fill() == side)
-        && (mainBoard.boards.get( miniIndex ).buttons.get(4).get_fill() == 'n'))
+    else if((mainBoard.boards.get( 
+        miniIndex ).buttons.get(0).get_fill() == side)
+        && (mainBoard.boards.get( 
+            miniIndex ).buttons.get(8).get_fill() == side)
+        && (mainBoard.boards.get( 
+            miniIndex ).buttons.get(4).get_fill() == 'n'))
     {
       square = 4;
     }
-    else if((mainBoard.boards.get( miniIndex ).buttons.get(4).get_fill() == side)
-        && (mainBoard.boards.get( miniIndex ).buttons.get(8).get_fill() == side)
-        && (mainBoard.boards.get( miniIndex ).buttons.get(0).get_fill() == 'n'))
+    else if((mainBoard.boards.get( 
+        miniIndex ).buttons.get(4).get_fill() == side)
+        && (mainBoard.boards.get( 
+            miniIndex ).buttons.get(8).get_fill() == side)
+        && (mainBoard.boards.get( 
+            miniIndex ).buttons.get(0).get_fill() == 'n'))
     {
       square = 0;
     }
 	  
 	  //2,4,6 diag
-    else if((mainBoard.boards.get( miniIndex ).buttons.get(2).get_fill() == side)
-        && (mainBoard.boards.get( miniIndex ).buttons.get(4).get_fill() == side)
-        && (mainBoard.boards.get( miniIndex ).buttons.get(6).get_fill() == 'n'))
+    else if((mainBoard.boards.get( 
+        miniIndex ).buttons.get(2).get_fill() == side)
+        && (mainBoard.boards.get( 
+            miniIndex ).buttons.get(4).get_fill() == side)
+        && (mainBoard.boards.get( 
+            miniIndex ).buttons.get(6).get_fill() == 'n'))
     {
       square = 6;
     }
-    else if((mainBoard.boards.get( miniIndex ).buttons.get(2).get_fill() == side)
-        && (mainBoard.boards.get( miniIndex ).buttons.get(6).get_fill() == side)
-        && (mainBoard.boards.get( miniIndex ).buttons.get(4).get_fill() == 'n'))
+    else if((mainBoard.boards.get( 
+        miniIndex ).buttons.get(2).get_fill() == side)
+        && (mainBoard.boards.get( 
+            miniIndex ).buttons.get(6).get_fill() == side)
+        && (mainBoard.boards.get( 
+            miniIndex ).buttons.get(4).get_fill() == 'n'))
     {
       square = 4;
     }
-    else if((mainBoard.boards.get( miniIndex ).buttons.get(4).get_fill() == side)
-        && (mainBoard.boards.get( miniIndex ).buttons.get(6).get_fill() == side)
-        && (mainBoard.boards.get( miniIndex ).buttons.get(2).get_fill() == 'n'))
+    else if((mainBoard.boards.get( 
+        miniIndex ).buttons.get(4).get_fill() == side)
+        && (mainBoard.boards.get( 
+            miniIndex ).buttons.get(6).get_fill() == side)
+        && (mainBoard.boards.get( 
+            miniIndex ).buttons.get(2).get_fill() == 'n'))
     {
       square = 2;
     }
@@ -264,161 +336,233 @@ public class ArtificialIntelligence
 	{
     int square = -1;
     //top row
-    if((mainBoard.boards.get( miniIndex ).buttons.get(0).get_fill() == opside)
-        && (mainBoard.boards.get( miniIndex ).buttons.get(1).get_fill() == opside)
-        && (mainBoard.boards.get( miniIndex ).buttons.get(2).get_fill() == 'n'))
+    if((mainBoard.boards.get( 
+        miniIndex ).buttons.get(0).get_fill() == opside)
+        && (mainBoard.boards.get( 
+            miniIndex ).buttons.get(1).get_fill() == opside)
+        && (mainBoard.boards.get( 
+            miniIndex ).buttons.get(2).get_fill() == 'n'))
     {
       square = 2;
     }
-    else if((mainBoard.boards.get( miniIndex ).buttons.get(0).get_fill() == opside)
-        && (mainBoard.boards.get( miniIndex ).buttons.get(2).get_fill() == opside)
-        && (mainBoard.boards.get( miniIndex ).buttons.get(1).get_fill() == 'n'))
+    else if((mainBoard.boards.get( 
+        miniIndex ).buttons.get(0).get_fill() == opside)
+        && (mainBoard.boards.get( 
+            miniIndex ).buttons.get(2).get_fill() == opside)
+        && (mainBoard.boards.get( 
+            miniIndex ).buttons.get(1).get_fill() == 'n'))
     {
       square = 1;
     }
-    else if((mainBoard.boards.get( miniIndex ).buttons.get(1).get_fill() == opside)
-        && (mainBoard.boards.get( miniIndex ).buttons.get(2).get_fill() == opside)
-        && (mainBoard.boards.get( miniIndex ).buttons.get(0).get_fill() == 'n'))
+    else if((mainBoard.boards.get( 
+        miniIndex ).buttons.get(1).get_fill() == opside)
+        && (mainBoard.boards.get( 
+            miniIndex ).buttons.get(2).get_fill() == opside)
+        && (mainBoard.boards.get( 
+            miniIndex ).buttons.get(0).get_fill() == 'n'))
     {
       square = 0;
     }
     
     //mid row
-    else if((mainBoard.boards.get( miniIndex ).buttons.get(3).get_fill() == opside)
-        && (mainBoard.boards.get( miniIndex ).buttons.get(4).get_fill() == opside)
-        && (mainBoard.boards.get( miniIndex ).buttons.get(5).get_fill() == 'n'))
+    else if((mainBoard.boards.get( 
+        miniIndex ).buttons.get(3).get_fill() == opside)
+        && (mainBoard.boards.get( 
+            miniIndex ).buttons.get(4).get_fill() == opside)
+        && (mainBoard.boards.get( 
+            miniIndex ).buttons.get(5).get_fill() == 'n'))
     {
       square = 5;
     }
-    else if((mainBoard.boards.get( miniIndex ).buttons.get(3).get_fill() == opside)
-        && (mainBoard.boards.get( miniIndex ).buttons.get(5).get_fill() == opside)
-        && (mainBoard.boards.get( miniIndex ).buttons.get(4).get_fill() == 'n'))
+    else if((mainBoard.boards.get( 
+        miniIndex ).buttons.get(3).get_fill() == opside)
+        && (mainBoard.boards.get( 
+            miniIndex ).buttons.get(5).get_fill() == opside)
+        && (mainBoard.boards.get( 
+            miniIndex ).buttons.get(4).get_fill() == 'n'))
     {
       square = 4;
     }
-    else if((mainBoard.boards.get( miniIndex ).buttons.get(4).get_fill() == opside)
-        && (mainBoard.boards.get( miniIndex ).buttons.get(5).get_fill() == opside)
-        && (mainBoard.boards.get( miniIndex ).buttons.get(3).get_fill() == 'n'))
+    else if((mainBoard.boards.get( 
+        miniIndex ).buttons.get(4).get_fill() == opside)
+        && (mainBoard.boards.get( 
+            miniIndex ).buttons.get(5).get_fill() == opside)
+        && (mainBoard.boards.get( 
+            miniIndex ).buttons.get(3).get_fill() == 'n'))
     {
       square = 3;
     }
     
     //bot row
-    else if((mainBoard.boards.get( miniIndex ).buttons.get(6).get_fill() == opside)
-        && (mainBoard.boards.get( miniIndex ).buttons.get(7).get_fill() == opside)
-        && (mainBoard.boards.get( miniIndex ).buttons.get(8).get_fill() == 'n'))
+    else if((mainBoard.boards.get( 
+        miniIndex ).buttons.get(6).get_fill() == opside)
+        && (mainBoard.boards.get( 
+            miniIndex ).buttons.get(7).get_fill() == opside)
+        && (mainBoard.boards.get( 
+            miniIndex ).buttons.get(8).get_fill() == 'n'))
     {
       square = 8;
     }
-    else if((mainBoard.boards.get( miniIndex ).buttons.get(6).get_fill() == opside)
-        && (mainBoard.boards.get( miniIndex ).buttons.get(8).get_fill() == opside)
-        && (mainBoard.boards.get( miniIndex ).buttons.get(7).get_fill() == 'n'))
+    else if((mainBoard.boards.get( 
+        miniIndex ).buttons.get(6).get_fill() == opside)
+        && (mainBoard.boards.get( 
+            miniIndex ).buttons.get(8).get_fill() == opside)
+        && (mainBoard.boards.get( 
+            miniIndex ).buttons.get(7).get_fill() == 'n'))
     {
       square = 7;
     }
-    else if((mainBoard.boards.get( miniIndex ).buttons.get(7).get_fill() == opside)
-        && (mainBoard.boards.get( miniIndex ).buttons.get(8).get_fill() == opside)
-        && (mainBoard.boards.get( miniIndex ).buttons.get(6).get_fill() == 'n'))
+    else if((mainBoard.boards.get( 
+        miniIndex ).buttons.get(7).get_fill() == opside)
+        && (mainBoard.boards.get( 
+            miniIndex ).buttons.get(8).get_fill() == opside)
+        && (mainBoard.boards.get( 
+            miniIndex ).buttons.get(6).get_fill() == 'n'))
     {
       square = 6;
     }
     
     //left col
-    else if((mainBoard.boards.get( miniIndex ).buttons.get(0).get_fill() == opside)
-        && (mainBoard.boards.get( miniIndex ).buttons.get(3).get_fill() == opside)
-        && (mainBoard.boards.get( miniIndex ).buttons.get(6).get_fill() == 'n'))
+    else if((mainBoard.boards.get( 
+        miniIndex ).buttons.get(0).get_fill() == opside)
+        && (mainBoard.boards.get( 
+            miniIndex ).buttons.get(3).get_fill() == opside)
+        && (mainBoard.boards.get( 
+            miniIndex ).buttons.get(6).get_fill() == 'n'))
     {
       square = 6;
     }
-    else if((mainBoard.boards.get( miniIndex ).buttons.get(0).get_fill() == opside)
-        && (mainBoard.boards.get( miniIndex ).buttons.get(6).get_fill() == opside)
-        && (mainBoard.boards.get( miniIndex ).buttons.get(3).get_fill() == 'n'))
+    else if((mainBoard.boards.get( 
+        miniIndex ).buttons.get(0).get_fill() == opside)
+        && (mainBoard.boards.get( 
+            miniIndex ).buttons.get(6).get_fill() == opside)
+        && (mainBoard.boards.get( 
+            miniIndex ).buttons.get(3).get_fill() == 'n'))
     {
       square = 3;
     }
-    else if((mainBoard.boards.get( miniIndex ).buttons.get(3).get_fill() == opside)
-        && (mainBoard.boards.get( miniIndex ).buttons.get(6).get_fill() == opside)
-        && (mainBoard.boards.get( miniIndex ).buttons.get(0).get_fill() == 'n'))
+    else if((mainBoard.boards.get( 
+        miniIndex ).buttons.get(3).get_fill() == opside)
+        && (mainBoard.boards.get( 
+            miniIndex ).buttons.get(6).get_fill() == opside)
+        && (mainBoard.boards.get( 
+            miniIndex ).buttons.get(0).get_fill() == 'n'))
     {
       square = 0;
     }
     
     //mid col
-    else if((mainBoard.boards.get( miniIndex ).buttons.get(1).get_fill() == opside)
-        && (mainBoard.boards.get( miniIndex ).buttons.get(4).get_fill() == opside)
-        && (mainBoard.boards.get( miniIndex ).buttons.get(7).get_fill() == 'n'))
+    else if((mainBoard.boards.get( 
+        miniIndex ).buttons.get(1).get_fill() == opside)
+        && (mainBoard.boards.get( 
+            miniIndex ).buttons.get(4).get_fill() == opside)
+        && (mainBoard.boards.get( 
+            miniIndex ).buttons.get(7).get_fill() == 'n'))
     {
       square = 7;
     }
-    else if((mainBoard.boards.get( miniIndex ).buttons.get(1).get_fill() == opside)
-        && (mainBoard.boards.get( miniIndex ).buttons.get(7).get_fill() == opside)
-        && (mainBoard.boards.get( miniIndex ).buttons.get(4).get_fill() == 'n'))
+    else if((mainBoard.boards.get( 
+        miniIndex ).buttons.get(1).get_fill() == opside)
+        && (mainBoard.boards.get( 
+            miniIndex ).buttons.get(7).get_fill() == opside)
+        && (mainBoard.boards.get( 
+            miniIndex ).buttons.get(4).get_fill() == 'n'))
     {
       square = 4;
     }
-    else if((mainBoard.boards.get( miniIndex ).buttons.get(4).get_fill() == opside)
-        && (mainBoard.boards.get( miniIndex ).buttons.get(7).get_fill() == opside)
-        && (mainBoard.boards.get( miniIndex ).buttons.get(1).get_fill() == 'n'))
+    else if((mainBoard.boards.get( 
+        miniIndex ).buttons.get(4).get_fill() == opside)
+        && (mainBoard.boards.get( 
+            miniIndex ).buttons.get(7).get_fill() == opside)
+        && (mainBoard.boards.get( 
+            miniIndex ).buttons.get(1).get_fill() == 'n'))
     {
       square = 1;
     }
     
     //right col
-    else if((mainBoard.boards.get( miniIndex ).buttons.get(2).get_fill() == opside)
-        && (mainBoard.boards.get( miniIndex ).buttons.get(5).get_fill() == opside)
-        && (mainBoard.boards.get( miniIndex ).buttons.get(8).get_fill() == 'n'))
+    else if((mainBoard.boards.get( 
+        miniIndex ).buttons.get(2).get_fill() == opside)
+        && (mainBoard.boards.get( 
+            miniIndex ).buttons.get(5).get_fill() == opside)
+        && (mainBoard.boards.get( 
+            miniIndex ).buttons.get(8).get_fill() == 'n'))
     {
       square = 8;
     }
-    else if((mainBoard.boards.get( miniIndex ).buttons.get(2).get_fill() == opside)
-        && (mainBoard.boards.get( miniIndex ).buttons.get(8).get_fill() == opside)
-        && (mainBoard.boards.get( miniIndex ).buttons.get(5).get_fill() == 'n'))
+    else if((mainBoard.boards.get( 
+        miniIndex ).buttons.get(2).get_fill() == opside)
+        && (mainBoard.boards.get( 
+            miniIndex ).buttons.get(8).get_fill() == opside)
+        && (mainBoard.boards.get( 
+            miniIndex ).buttons.get(5).get_fill() == 'n'))
     {
       square = 5;
     }
-    else if((mainBoard.boards.get( miniIndex ).buttons.get(5).get_fill() == opside)
-        && (mainBoard.boards.get( miniIndex ).buttons.get(8).get_fill() == opside)
-        && (mainBoard.boards.get( miniIndex ).buttons.get(2).get_fill() == 'n'))
+    else if((mainBoard.boards.get( 
+        miniIndex ).buttons.get(5).get_fill() == opside)
+        && (mainBoard.boards.get( 
+            miniIndex ).buttons.get(8).get_fill() == opside)
+        && (mainBoard.boards.get( 
+            miniIndex ).buttons.get(2).get_fill() == 'n'))
     {
       square = 2;
     }
     
     //0,4,8 diag
-    else if((mainBoard.boards.get( miniIndex ).buttons.get(0).get_fill() == opside)
-        && (mainBoard.boards.get( miniIndex ).buttons.get(4).get_fill() == opside)
-        && (mainBoard.boards.get( miniIndex ).buttons.get(8).get_fill() == 'n'))
+    else if((mainBoard.boards.get( 
+        miniIndex ).buttons.get(0).get_fill() == opside)
+        && (mainBoard.boards.get( 
+            miniIndex ).buttons.get(4).get_fill() == opside)
+        && (mainBoard.boards.get( 
+            miniIndex ).buttons.get(8).get_fill() == 'n'))
     {
       square = 8;
     }
-    else if((mainBoard.boards.get( miniIndex ).buttons.get(0).get_fill() == opside)
-        && (mainBoard.boards.get( miniIndex ).buttons.get(8).get_fill() == opside)
-        && (mainBoard.boards.get( miniIndex ).buttons.get(4).get_fill() == 'n'))
+    else if((mainBoard.boards.get( 
+        miniIndex ).buttons.get(0).get_fill() == opside)
+        && (mainBoard.boards.get( 
+            miniIndex ).buttons.get(8).get_fill() == opside)
+        && (mainBoard.boards.get( 
+            miniIndex ).buttons.get(4).get_fill() == 'n'))
     {
       square = 4;
     }
-    else if((mainBoard.boards.get( miniIndex ).buttons.get(4).get_fill() == opside)
-        && (mainBoard.boards.get( miniIndex ).buttons.get(8).get_fill() == opside)
-        && (mainBoard.boards.get( miniIndex ).buttons.get(0).get_fill() == 'n'))
+    else if((mainBoard.boards.get( 
+        miniIndex ).buttons.get(4).get_fill() == opside)
+        && (mainBoard.boards.get( 
+            miniIndex ).buttons.get(8).get_fill() == opside)
+        && (mainBoard.boards.get( 
+            miniIndex ).buttons.get(0).get_fill() == 'n'))
     {
       square = 0;
     }
     
     //2,4,6 diag
-    else if((mainBoard.boards.get( miniIndex ).buttons.get(2).get_fill() == opside)
-        && (mainBoard.boards.get( miniIndex ).buttons.get(4).get_fill() == opside)
-        && (mainBoard.boards.get( miniIndex ).buttons.get(6).get_fill() == 'n'))
+    else if((mainBoard.boards.get( 
+        miniIndex ).buttons.get(2).get_fill() == opside)
+        && (mainBoard.boards.get( 
+            miniIndex ).buttons.get(4).get_fill() == opside)
+        && (mainBoard.boards.get( 
+            miniIndex ).buttons.get(6).get_fill() == 'n'))
     {
       square = 6;
     }
-    else if((mainBoard.boards.get( miniIndex ).buttons.get(2).get_fill() == opside)
-        && (mainBoard.boards.get( miniIndex ).buttons.get(6).get_fill() == opside)
-        && (mainBoard.boards.get( miniIndex ).buttons.get(4).get_fill() == 'n'))
+    else if((mainBoard.boards.get( 
+        miniIndex ).buttons.get(2).get_fill() == opside)
+        && (mainBoard.boards.get( 
+            miniIndex ).buttons.get(6).get_fill() == opside)
+        && (mainBoard.boards.get( 
+            miniIndex ).buttons.get(4).get_fill() == 'n'))
     {
       square = 4;
     }
-    else if((mainBoard.boards.get( miniIndex ).buttons.get(4).get_fill() == opside)
-        && (mainBoard.boards.get( miniIndex ).buttons.get(6).get_fill() == opside)
-        && (mainBoard.boards.get( miniIndex ).buttons.get(2).get_fill() == 'n'))
+    else if((mainBoard.boards.get( 
+        miniIndex ).buttons.get(4).get_fill() == opside)
+        && (mainBoard.boards.get( 
+            miniIndex ).buttons.get(6).get_fill() == opside)
+        && (mainBoard.boards.get( 
+            miniIndex ).buttons.get(2).get_fill() == 'n'))
     {
       square = 2;
     }

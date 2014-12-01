@@ -18,7 +18,6 @@ import java.io.IOException;
 public class MainBoard extends JPanel
 {
 	public static ArrayList< MiniBoard > boards = new ArrayList<MiniBoard>();
-
 	static ImageIcon img;
 	static ImageIcon xImage;
 	static ImageIcon oImage;
@@ -29,15 +28,14 @@ public class MainBoard extends JPanel
 	GameGUI game;
 	JLabel output;
 	public ButtonListener button_listern = new ButtonListener(); 
-	private boolean online; //pat added this
-  private ClientSideSocket socket; //pat added this
-  //private String serverIP = "127.0.0.1"; //pat added this
-  private String serverIP = "54.148.133.158"; //pat added this
-  private int portNum = 45000; //pat added this
-  private boolean waiting; //pat added this
-  private boolean gameOver = false; // pat added this
-  private boolean onlinePlayInitialized = false; //pat added this
-  private JDialog waitMessage; //pat added this
+	private boolean online;
+  private ClientSideSocket socket;
+  private String serverIP = "54.148.133.158"; 
+  private int portNum = 45000; 
+  private boolean waiting;
+  private boolean gameOver = false;
+  private boolean onlinePlayInitialized = false;
+  private JDialog waitMessage;
 
 	static boolean first_move = true; 
 
@@ -62,9 +60,12 @@ public class MainBoard extends JPanel
 		stats = output; 
 		xImagePath = new String("images/X_Image.jpg");
 		img = new ImageIcon();
-		xImage = new ImageIcon(getClass().getClassLoader().getResource(xImagePath));
-		blankImage = new ImageIcon(getClass().getClassLoader().getResource("images/blank.jpg"));
-		oImage = new ImageIcon(getClass().getClassLoader().getResource("images/O_image.jpg"));
+		xImage = new ImageIcon(
+		    getClass().getClassLoader().getResource(xImagePath));
+		blankImage = new ImageIcon(
+		    getClass().getClassLoader().getResource("images/blank.jpg"));
+		oImage = new ImageIcon(
+		    getClass().getClassLoader().getResource("images/O_image.jpg"));
 		img = xImage;
 
 		Color black = new Color(0, 0, 0);
@@ -80,7 +81,6 @@ public class MainBoard extends JPanel
 		} 
 	}
 	
-//pat added this function
   public void startOnlinePlay()
   {
     online = true;
@@ -103,8 +103,8 @@ public class MainBoard extends JPanel
         NetworkExchange firstMove = socket.recvObject();
         addWaitMessage(false);
         onlinePlayInitialized = true;
-        //  I know this line is long
-        boards.get(firstMove.getParentIndex()).buttons.get(firstMove.getButtonIndex()).doClick();
+        boards.get(firstMove.getParentIndex()).buttons.get(
+            firstMove.getButtonIndex()).doClick();
       }
       else
       {
@@ -127,7 +127,8 @@ public class MainBoard extends JPanel
 	  if(online)
 	  {
 	    JOptionPane.showMessageDialog(
-	        game, "You cannot reset during online play", "Cannot Reset", JOptionPane.INFORMATION_MESSAGE);
+	        game, "You cannot reset during online play", "Cannot Reset", 
+	        JOptionPane.INFORMATION_MESSAGE);
 	  }
 	  else
 	  {
@@ -264,8 +265,8 @@ public class MainBoard extends JPanel
 				first_move = false ; 
 			}
 
-			// sets the button icon to xImage, we can change this to set the image of
-			// X or O depending on the player...
+			//sets the button icon to xImage, we can change this to set the image of
+			//X or O depending on the player...
 			button.setDisabledIcon( img );
 			if(img == xImage)
 			{
@@ -282,12 +283,16 @@ public class MainBoard extends JPanel
 				stats.setText("Move: X\n");
 			}
 
-			//linked list of strings x or 0 then index on the main board and then index on the mini
-			// eg x00 would be the top left mini bord and the top left box in there 
-			// all indexs will be garentited to be less than 10 so only single digests 
+			//linked list of strings x or 0 then index on the main board 
+			//and then index on the mini
+			// eg x00 would be the top left mini bord 
+			//and the top left box in there 
+			// all indexs will be garentited to be less 
+			//than 10 so only single digests 
 
 
-			if ( boards.get( button.get_parent() ).CheckWinner( button.get_index()  ) || 
+			if ( boards.get( button.get_parent() ).CheckWinner( 
+			    button.get_index()  ) || 
 					!boards.get( button.get_parent() ).is_active() )
 			{
 				//do some check winner stuff 
@@ -323,7 +328,9 @@ public class MainBoard extends JPanel
 			//pat put this block in this if statement
 			if(!online)
 			{
-			  String move = button.get_fill() + Integer.toString( button.get_parent() ) + Integer.toString( button.get_index() ); 
+			  String move = button.get_fill() + 
+			      Integer.toString( button.get_parent() ) + 
+			      Integer.toString( button.get_index() ); 
 			  game.moves_model.addElement( game.moves_model.size()+": " + move );
 
 			  try 
@@ -332,7 +339,6 @@ public class MainBoard extends JPanel
 			  } 
 			  catch (InvalidInputException e1) 
 			  {
-				//  TODO Auto-generated catch block
 				  e1.printStackTrace();
 				  System.out.println( "you sent a bad move in "); 
 			  }
@@ -341,17 +347,17 @@ public class MainBoard extends JPanel
 			if( AImove  )
 			{
 				AImove = false;
-				// boards.get(button.get_index())
 				AI.makeMove(button.get_index(),game);
 				AImove = true;
 			}
 
 
 			// So that the button can't be clicked again. It currently sets the
-			// button to grey, but it looks like that can be changed with UIManager..
+			// button to grey, but it looks like that can be 
+			//changed with UIManager..
 			button.setEnabled(false);
 			
-		//pat added following if statement
+		
       if(online && !waiting)
       {
         try
@@ -373,7 +379,8 @@ public class MainBoard extends JPanel
             moveData = socket.recvObject();
             onlinePlayInitialized = true;
             waiting = true;
-            boards.get(moveData.getParentIndex()).buttons.get(moveData.getButtonIndex()).doClick();
+            boards.get(moveData.getParentIndex()).buttons.get(
+                moveData.getButtonIndex()).doClick();
           }
           addWaitMessage(false);
         }
@@ -386,10 +393,10 @@ public class MainBoard extends JPanel
               "Disconnected", JOptionPane.INFORMATION_MESSAGE);
         }
       }
-      waiting = false; //pat added this
+      waiting = false; 
 		}
 	}
-	//pat added this function
+
 	public void turnAIOn(String diff_in)
 	{
 	  AI = new ArtificialIntelligence(this, diff_in);

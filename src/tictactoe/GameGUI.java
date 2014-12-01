@@ -61,8 +61,10 @@ public class GameGUI extends JFrame
 		menuBar = new JMenuBar();
 		menuBar.add(file);
 
-		// This panel could show the stats of the game, depending on what we want..
-		// It is currently set to a blue color just so we can see where it is in the
+		// This panel could show the stats of the game, 
+		//depending on what we want..
+		// It is currently set to a blue color just so we can 
+		//see where it is in the
 		// GUI.
 		statsPanel = new JPanel();
 		statsPanel.setLayout( new BoxLayout( statsPanel , BoxLayout.PAGE_AXIS ) );
@@ -95,7 +97,8 @@ public class GameGUI extends JFrame
 					if( moves_model.size() != 0  )
 						moves_model.remove( moves_model.size() - 1 );
 
-					MainBoard.img = 'x' ==  undo_s.charAt( 0 ) ? MainBoard.xImage : MainBoard.oImage ;
+					MainBoard.img = 'x' ==  undo_s.charAt( 0 ) ? 
+					    MainBoard.xImage : MainBoard.oImage ;
 
 					for( MiniBoard b : MainBoard.boards )
 					{
@@ -104,8 +107,10 @@ public class GameGUI extends JFrame
 
 
 
-					MiniBoard board = MainBoard.boards.get( Integer.parseInt( ""+undo_s.charAt( 1 ) ) );
-					Square_Button temp =  board.buttons.get( Integer.parseInt( ""+undo_s.charAt( 2 ) ) );
+					MiniBoard board = MainBoard.boards.get( 
+					    Integer.parseInt( ""+undo_s.charAt( 1 ) ) );
+					Square_Button temp =  board.buttons.get( 
+					    Integer.parseInt( ""+undo_s.charAt( 2 ) ) );
 
 					if( !board.is_active() )
 					{
@@ -116,9 +121,11 @@ public class GameGUI extends JFrame
 							String cur_move = it.next();
 							if( Integer.parseInt( ""+cur_move.charAt( 1 ) ) ==  board.index )
 							{
-								Square_Button cur_button = board.buttons.get( Integer.parseInt( ""+cur_move.charAt( 2 ) ) );
+								Square_Button cur_button = board.buttons.get( 
+								    Integer.parseInt( ""+cur_move.charAt( 2 ) ) );
 								cur_button.set_fill( cur_move.charAt( 0 ) );
-								cur_button.setDisabledIcon('x' ==  cur_move.charAt( 0 ) ? MainBoard.xImage : MainBoard.oImage );
+								cur_button.setDisabledIcon('x' ==  cur_move.charAt( 0 ) ? 
+								    MainBoard.xImage : MainBoard.oImage );
 								cur_button.setEnabled( false );
 							}
 						}  
@@ -161,14 +168,18 @@ public class GameGUI extends JFrame
 					if( !data.can_redo() )
 						redo.setEnabled( false );
 
-					MainBoard.img = 'x' ==  redo_s.charAt( 0 ) ? MainBoard.xImage : MainBoard.oImage ; 
+					MainBoard.img = 'x' ==  redo_s.charAt( 0 ) ? MainBoard.xImage : 
+					  MainBoard.oImage ; 
 					moves_model.addElement( moves_model.size()+": " + redo_s );
 
-					MiniBoard board = MainBoard.boards.get( Integer.parseInt( ""+redo_s.charAt( 1 ) ) );
-					Square_Button temp =  board.buttons.get( Integer.parseInt( ""+redo_s.charAt( 2 ) ) );
+					MiniBoard board = MainBoard.boards.get( 
+					    Integer.parseInt( ""+redo_s.charAt( 1 ) ) );
+					Square_Button temp =  board.buttons.get( 
+					    Integer.parseInt( ""+redo_s.charAt( 2 ) ) );
 
 					temp.set_fill( redo_s.charAt( 0 ) );
-					temp.setDisabledIcon(redo_s.charAt( 0 ) == 'x' ? MiniBoard.xImage : MiniBoard.oImage );
+					temp.setDisabledIcon(redo_s.charAt( 0 ) == 'x' ? 
+					    MiniBoard.xImage : MiniBoard.oImage );
 					temp.setEnabled( false );
 
 					if(MainBoard.boards.get( temp.get_index() ).is_active() )
@@ -230,7 +241,9 @@ public class GameGUI extends JFrame
 		westPanel.setPreferredSize(new Dimension(250,650));
 		JLabel winnerPic = new JLabel();
 		assert(glass_type.equals("winner") || glass_type.equals("stalemate"));
-		ImageIcon winPic = new ImageIcon(getClass().getClassLoader().getResource("images/" + glass_type + ".jpg"));
+		ImageIcon winPic = new ImageIcon(
+		    getClass().getClassLoader().getResource(
+		        "images/" + glass_type + ".jpg"));
 		winnerPic.setIcon(winPic);
 		inner.add(winnerPic);
 		JPanel topBar = new JPanel();
@@ -270,7 +283,8 @@ public class GameGUI extends JFrame
 		glass.setLayout(new FlowLayout());
 		glass.setBackground(new Color(226,237,135));
 		JLabel pic = new JLabel();
-		ImageIcon startIcon = new ImageIcon(getClass().getClassLoader().getResource("images/front.jpg"));
+		ImageIcon startIcon = new 
+		    ImageIcon(getClass().getClassLoader().getResource("images/front.jpg"));
 		pic.setIcon(startIcon);
 		JLabel gameType = new JLabel("Which type of game would you like to play?");
 		gameType.setFont(new Font("SansSerif", Font.BOLD, 36));
@@ -318,7 +332,9 @@ public class GameGUI extends JFrame
 			public void actionPerformed(ActionEvent e)
 			{
 				glass.setVisible(false);
-				JOptionPane.showMessageDialog(GameGUI.this, "Connecting to Opponent", "Connecting", JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.showMessageDialog(
+				    GameGUI.this, "Connecting to Opponent", 
+				    "Connecting", JOptionPane.INFORMATION_MESSAGE);
 				mainBoard.startOnlinePlay();
 			}
 		});
@@ -401,8 +417,7 @@ public class GameGUI extends JFrame
 			{
 				public void actionPerformed(ActionEvent e)
 				{
-				  /*JOptionPane.showMessageDialog(GameGUI.this,"Switching to Local Game",
-				                  "Local Game Starting...", JOptionPane.PLAIN_MESSAGE);*/
+				  
 					setVisible(false);
 					closePopup = true;
 				}

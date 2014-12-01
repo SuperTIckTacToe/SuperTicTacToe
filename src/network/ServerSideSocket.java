@@ -61,7 +61,8 @@ public class ServerSideSocket implements Runnable
       System.exit(7);
     }
   }
-  public boolean sendToClient(NetworkExchange gameData, boolean player1) throws IOException
+  public boolean sendToClient(
+      NetworkExchange gameData, boolean player1) throws IOException
   {
     boolean success = false;
     try
@@ -74,7 +75,6 @@ public class ServerSideSocket implements Runnable
       {
         outObjectP2.writeObject(gameData);
       }
-  //    outData.writeByte(0); //send 0 to signal the end of the string
       success = true;
     }
     catch (IOException e)

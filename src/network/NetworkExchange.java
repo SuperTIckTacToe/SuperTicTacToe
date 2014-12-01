@@ -2,7 +2,7 @@ package network;
 
 import java.io.Serializable;
 
-public class NetworkExchange implements Serializable //may or may not need to implement this
+public class NetworkExchange implements Serializable
 {
   private boolean gameOver = false;
   private boolean player1;
