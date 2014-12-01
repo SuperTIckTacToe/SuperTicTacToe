@@ -5,6 +5,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.util.Iterator;
 
 import javax.swing.*;
@@ -28,7 +31,8 @@ public class GameGUI extends JFrame
 	Game_data data;
 
 	JButton undo, redo;
-
+	boolean closePopup = false;
+	
 	public GameGUI()
 	{
 		setVisible(true);
@@ -285,10 +289,27 @@ public class GameGUI extends JFrame
 		{
 			public void actionPerformed(ActionEvent e)
 			{
+			  
 				AIDialog AIPopup = new AIDialog(GameGUI.this);
-				AIPopup.setVisible(true);
-				//mainBoard.turnAIOn();
-				glass.setVisible(false);
+				
+				
+	      WindowListener exitListener = new WindowAdapter()
+	      {
+
+	        @Override
+	        public void windowClosing(WindowEvent e)
+	        {
+	          closePopup = true;
+	        }
+	      };
+	      AIPopup.addWindowListener(exitListener);
+	      AIPopup.setVisible(true);
+				
+				if(!closePopup)
+				{
+				  glass.setVisible(false);
+				}
+				//else 
 			}
 		});
 		JButton network = new JButton("Play Online");
@@ -331,6 +352,10 @@ public class GameGUI extends JFrame
 			//setup
 			this.setMinimumSize(new Dimension(375, 100));
 			this.setResizable(false);
+			this.setLocation(300, 200);
+		
+			
+			
 			JPanel topPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
 			JPanel botPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
 
@@ -344,6 +369,7 @@ public class GameGUI extends JFrame
 				{
 					mainBoard.turnAIOn("EASY");
 					setVisible(false);
+					closePopup = false;
 				}
 			});
 
@@ -354,6 +380,7 @@ public class GameGUI extends JFrame
 				{
 					mainBoard.turnAIOn("MEDIUM");
 					setVisible(false);
+					closePopup = false;
 				}
 			});
 
@@ -364,6 +391,7 @@ public class GameGUI extends JFrame
 				{
 					mainBoard.turnAIOn("HARD");
 					setVisible(false);
+					closePopup = false;
 				}
 			});
 
@@ -373,7 +401,10 @@ public class GameGUI extends JFrame
 			{
 				public void actionPerformed(ActionEvent e)
 				{
+				  /*JOptionPane.showMessageDialog(GameGUI.this,"Switching to Local Game",
+				                  "Local Game Starting...", JOptionPane.PLAIN_MESSAGE);*/
 					setVisible(false);
+					closePopup = true;
 				}
 			});
 			//add items
