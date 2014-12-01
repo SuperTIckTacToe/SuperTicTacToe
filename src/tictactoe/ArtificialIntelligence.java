@@ -77,10 +77,10 @@ public class ArtificialIntelligence
       
       else if(difficulty == "HARD")
       {
-        move = playDefense(miniIndex);
+        move = findWinSquare(miniIndex);
         if(move == -1)
         {
-          move = findWinSquare(miniIndex);
+          move = playDefense(miniIndex);
         }
         if(move >= 0){}
         else move = abs( (randMove.nextInt() % 9) );
