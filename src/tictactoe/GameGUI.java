@@ -274,7 +274,9 @@ public class GameGUI extends JFrame
 	    {
 	    	public void actionPerformed(ActionEvent e)
 	    	{
-	    	  mainBoard.turnAIOn();
+	    	  AIDialog AIPopup = new AIDialog(GameGUI.this);
+	    	  AIPopup.setVisible(true);
+	    	  //mainBoard.turnAIOn();
 	    		glass.setVisible(false);
 	    	}
 	    });
@@ -303,5 +305,76 @@ public class GameGUI extends JFrame
 	    setGlassPane(glass);
 	    glass.setVisible(true);
   }
+ 
   
+  private class AIDialog extends JDialog
+  {
+    public AIDialog(JFrame mainframe)
+    {
+      //parent class ctor
+      super(mainframe, "Select Computer Difficulty", true);
+      //main layout same for each function
+      this.setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
+      
+
+      //setup
+      this.setMinimumSize(new Dimension(375, 100));
+      this.setResizable(false);
+      JPanel topPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+      JPanel botPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+      
+      topPanel.add(new JLabel("Please select Computer difficulty."));
+   
+      
+      JButton randButton = new JButton("Easy");
+      randButton.addActionListener(new ActionListener()
+                 {
+                    public void actionPerformed(ActionEvent e)
+                    {
+                      mainBoard.turnAIOn("EASY");
+                      setVisible(false);
+                    }
+                  });
+      
+      JButton easyButton = new JButton("Medium");
+      easyButton.addActionListener(new ActionListener()
+                 {
+                    public void actionPerformed(ActionEvent e)
+                    {
+                      mainBoard.turnAIOn("MEDIUM");
+                      setVisible(false);
+                    }
+                  });
+      
+      JButton medButton = new JButton("Hard");
+      medButton.addActionListener(new ActionListener()
+                 {
+                    public void actionPerformed(ActionEvent e)
+                    {
+                      mainBoard.turnAIOn("HARD");
+                      setVisible(false);
+                    }
+                  });
+      
+      //cancel button implementation
+      JButton cancelButton = new JButton("Cancel");
+      cancelButton.addActionListener(new ActionListener()
+                                  {
+                                    public void actionPerformed(ActionEvent e)
+                                    {
+                                      setVisible(false);
+                                    }
+                                  });
+      //add items
+      botPanel.add(randButton);
+      botPanel.add(easyButton);
+      botPanel.add(medButton);
+      botPanel.add(cancelButton);
+      
+      //complete window
+      this.add(topPanel);
+      this.add(botPanel);
+      return;
+    }
+  }
 }

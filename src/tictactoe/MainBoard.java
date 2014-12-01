@@ -40,7 +40,7 @@ public class MainBoard extends JPanel
 	static boolean first_move = true; 
 
 	Boolean AImove = false; 
-	ArtificialIntelligence AI = new ArtificialIntelligence(this, "EASY", 3000);
+	ArtificialIntelligence AI;
 
 	public MainBoard( JLabel _output, GameGUI game_in )
 	{
@@ -325,7 +325,7 @@ public class MainBoard extends JPanel
 			{
 				AImove = false;
 				// boards.get(button.get_index())
-				AI.makeMove(button.get_index());
+				AI.makeMove(button.get_index(),game);
 				AImove = true;
 			}
 
@@ -366,8 +366,9 @@ public class MainBoard extends JPanel
 		}
 	}
 	//pat added this function
-	public void turnAIOn()
+	public void turnAIOn(String diff_in)
 	{
+	  AI = new ArtificialIntelligence(this, diff_in);
 	  AImove = true;
 	}
 
