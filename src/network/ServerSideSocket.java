@@ -124,9 +124,9 @@ public class ServerSideSocket implements Runnable
   {
     try
     {
-      dataPlayer1 = new NetworkExchange("blah");
+      dataPlayer1 = new NetworkExchange();
       dataPlayer1.setPlayer1(true);
-      dataPlayer2 = new NetworkExchange("bob");
+      dataPlayer2 = new NetworkExchange();
       dataPlayer2.setPlayer1(false);
       sendToClient(dataPlayer1, true);
       sendToClient(dataPlayer2, false);
@@ -144,6 +144,11 @@ public class ServerSideSocket implements Runnable
         dataPlayer2 = recvObject(false);
         System.out.println("received from p2");
         sendToClient(dataPlayer2, true);
+        if(dataPlayer2.getGameOver())
+        {
+          finished = true;
+          break;
+        }
         System.out.println("sent to p1");
       }
     }

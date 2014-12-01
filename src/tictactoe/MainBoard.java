@@ -115,6 +115,7 @@ public class MainBoard extends JPanel
     catch(IOException e)
     {
       online = false;
+      addWaitMessage(false);
       JOptionPane.showMessageDialog(game, 
           "Opponent has left the game. Switching to Local Play.", 
           "Disconnected", JOptionPane.INFORMATION_MESSAGE);
@@ -347,7 +348,7 @@ public class MainBoard extends JPanel
       {
         try
         {
-          NetworkExchange moveData = new NetworkExchange("user"); 
+          NetworkExchange moveData = new NetworkExchange(); 
           moveData.setButtonIndex(button.get_index());
           moveData.setParentIndex(button.get_parent());
           if(gameOver)
