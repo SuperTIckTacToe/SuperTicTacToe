@@ -124,12 +124,20 @@ public class MainBoard extends JPanel
 
 	public void resetBoard()
 	{
-		for(MiniBoard mini: boards)
-		{
-			mini.resetMiniBoard(new ButtonListener());
-			first_move = true;
-			img = xImage;
-		}
+	  if(online)
+	  {
+	    JOptionPane.showMessageDialog(
+	        game, "You cannot reset during online play", "Cannot Reset", JOptionPane.INFORMATION_MESSAGE);
+	  }
+	  else
+	  {
+	    for(MiniBoard mini: boards)
+		  {
+			  mini.resetMiniBoard(new ButtonListener());
+			  first_move = true;
+			  img = xImage;
+		  }
+	  }
 	}
 
 	boolean check_winner( int in )
