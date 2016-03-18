@@ -6,7 +6,7 @@ import javax.swing.WindowConstants;
 import tictactoe.MiniBoard;
 import tictactoe.MainBoard;
 
-public class MainFile1
+public class Main
 {
   public static GameGUI main;
   
