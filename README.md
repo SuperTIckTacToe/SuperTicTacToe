@@ -17,3 +17,6 @@ To play the computer, first select the computer's difficulty level (easy/medium/
 
 This option is available for players who want to play from two separate computers. This version of the game is played over a network, and each player can connect to the game from their own computer. The play then proceeds back and forth, with each player choosing a square for X/O on their turn. The networked version can support up to 3 games played at once.
 
+
+### To Run 
+    ./run.sh
