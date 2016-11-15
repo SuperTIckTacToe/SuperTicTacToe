@@ -327,6 +327,8 @@ public class GameGUI extends JFrame
 			}
 		});
 		JButton network = new JButton("Play Online");
+    // disabled because the server was taken down
+    network.setEnabled(false);
 		network.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
